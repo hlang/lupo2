@@ -25,11 +25,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-                .ldapAuthentication()
+        auth.ldapAuthentication()
                 .userSearchFilter("(uid={0})")
                 .userSearchBase("ou=people,o=sevenSeas")
                 .groupSearchBase("ou=groups,o=sevenSeas")
+                .contextSource().url("ldap://localhost:10389");
+        auth.ldapAuthentication()
+                .userDnPatterns("uid={0},ou=system")
                 .contextSource().url("ldap://localhost:10389");
     }
 }
