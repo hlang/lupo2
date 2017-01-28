@@ -1,5 +1,6 @@
-package de.hartmut.lupo;
+package de.hartmut.lupo.config;
 
+import de.hartmut.lupo.config.LupoConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -14,6 +15,13 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private final LupoConfig lupoConfig;
+
+    @Autowired
+    public WebSecurityConfig(LupoConfig lupoConfig) {
+        this.lupoConfig = lupoConfig;
+    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -25,13 +33,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+
         auth.ldapAuthentication()
                 .userSearchFilter("(uid={0})")
-                .userSearchBase("ou=people,o=sevenSeas")
-                .groupSearchBase("ou=groups,o=sevenSeas")
-                .contextSource().url("ldap://localhost:10389");
+                .userSearchBase(lupoConfig.getUserSearchBase())
+                .groupSearchBase(lupoConfig.getGroupSearchBase())
+                .contextSource().url(lupoConfig.getLdapUrl());
         auth.ldapAuthentication()
                 .userDnPatterns("uid={0},ou=system")
-                .contextSource().url("ldap://localhost:10389");
+                .contextSource().url(lupoConfig.getLdapUrl());
     }
 }
