@@ -1,4 +1,20 @@
 /*
+ * Copyright 2017 Hartmut Lang
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
@@ -100,15 +116,15 @@ public class LdapUtil {
                 SearchResult result = (SearchResult) enm.next();
                 keyDn = result.getNameInNamespace();
 
-                 logger.info("getDn(): dn=" + keyDn);
+                logger.info("getDn(): dn=" + keyDn);
             }
         } catch (NamingException e) {
-             logger.info(e.getMessage());
+            logger.info(e.getMessage());
         } finally {
             try {
                 ctx.close();
             } catch (NamingException ex) {
-                 logger.error("Closing failed with " + ex, ex);
+                logger.error("Closing failed with " + ex, ex);
             }
         }
 
@@ -186,7 +202,7 @@ public class LdapUtil {
                 logger.info("searchMatchingUid(): found dn=" + keyDn);
             }
         } catch (NamingException e) {
-             logger.info(e.getMessage());
+            logger.info(e.getMessage());
         } finally {
             try {
                 ctx.close();
@@ -383,14 +399,14 @@ public class LdapUtil {
             // read the attributes
             answer = ctx.getAttributes(dn);
         } catch (NamingException e) {
-             logger.info("get attributes for >" + dn + "< failed with " + e);
+            logger.info("get attributes for >" + dn + "< failed with " + e);
             answer = null;
         } finally {
             if (ctx != null) {
                 try {
                     ctx.close();
                 } catch (NamingException ex) {
-                     logger.error("readAttributes(): close failed with " + ex, ex);
+                    logger.error("readAttributes(): close failed with " + ex, ex);
                 }
             }
         }
@@ -419,13 +435,13 @@ public class LdapUtil {
             ctx.modifyAttributes(dn, modArray);
             result = true; // success
         } catch (NamingException e) {
-             logger.info("modifing attributes for >" + dn + "< failed with " + e);
+            logger.info("modifing attributes for >" + dn + "< failed with " + e);
         } finally {
             if (ctx != null) {
                 try {
                     ctx.close();
                 } catch (NamingException ex) {
-                     logger.error("updateAttributes(): close failed with " + ex, ex);
+                    logger.error("updateAttributes(): close failed with " + ex, ex);
                 }
             }
         }
