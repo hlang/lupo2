@@ -16,20 +16,55 @@
 
 package de.hartmut.lupo.rest;
 
-import org.springframework.stereotype.Controller;
+import de.hartmut.lupo.domain.User;
+import de.hartmut.lupo.domain.UserRepo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.security.Principal;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
- * hartmut on 29.01.17.
+ * hartmut on 05.02.17.
  */
 @RestController
 public class UserController {
 
-    @GetMapping("/user")
-    public Principal user(Principal user) {
-        return user;
+    private final UserRepo userRepo;
+
+    @Autowired
+    public UserController(UserRepo userRepo) {
+        this.userRepo = userRepo;
+    }
+
+    @GetMapping("/users")
+    public ResponseEntity<List<User>> getUsers() {
+        return ResponseEntity.ok(userRepo.findAll());
+    }
+
+    @GetMapping("/users/search")
+    public ResponseEntity<List<User>> searchUsers(
+            @RequestParam(value = "uid", required = false, defaultValue = "")
+                    String uid,
+            @RequestParam(value = "firstname", required = false, defaultValue = "")
+                    String firstname,
+            @RequestParam(value = "lastname", required = false, defaultValue = "")
+                    String lastname,
+            @RequestParam(value = "email", required = false, defaultValue = "")
+                    String email,
+            @RequestParam(value = "offset", required = false, defaultValue = "0")
+                    int offset,
+            @RequestParam(value = "limit", required = false, defaultValue = "25")
+                    int limit
+    ) {
+        List<User> matchingUsers = userRepo.findByUidOrFistnameOrLastnameOrEmail(uid, firstname, lastname, email);
+        List<User> limitedUsers = matchingUsers.stream()
+                .skip(offset)
+                .limit(limit)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(limitedUsers);
     }
 }
