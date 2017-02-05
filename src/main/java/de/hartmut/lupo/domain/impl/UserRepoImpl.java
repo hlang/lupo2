@@ -23,15 +23,9 @@ import org.springframework.ldap.core.ContextMapper;
 import org.springframework.ldap.core.DirContextOperations;
 import org.springframework.ldap.core.LdapTemplate;
 import org.springframework.ldap.core.support.AbstractContextMapper;
-import org.springframework.ldap.query.ConditionCriteria;
-import org.springframework.ldap.query.ContainerCriteria;
 import org.springframework.ldap.query.LdapQuery;
-import org.springframework.ldap.query.LdapQueryBuilder;
-import org.springframework.ldap.support.LdapUtils;
 import org.springframework.stereotype.Repository;
-import org.springframework.util.StringUtils;
 
-import javax.naming.ldap.LdapName;
 import java.util.List;
 
 import static de.hartmut.lupo.ldap.LdapConstants.*;
@@ -83,8 +77,7 @@ public class UserRepoImpl implements UserRepo {
         public User doMapFromContext(DirContextOperations context) {
             User user = new User();
 
-            LdapName dn = LdapUtils.newLdapName(context.getDn().toString());
-            user.setDn(dn.toString());
+            user.setDn(context.getNameInNamespace());
             user.setFullName(context.getStringAttribute(LDAP_ATTR_CN));
             user.setFirstName(context.getStringAttribute(LDAP_ATTR_GIVEN_NAME));
             user.setLastName(context.getStringAttribute(LDAP_ATTR_SN));
