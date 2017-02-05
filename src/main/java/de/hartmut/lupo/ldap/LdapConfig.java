@@ -20,6 +20,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.ldap.core.LdapTemplate;
 import org.springframework.ldap.core.support.LdapContextSource;
+import org.springframework.security.ldap.authentication.SpringSecurityAuthenticationSource;
 
 /**
  * hartmut on 21.01.17.
@@ -33,6 +34,7 @@ public class LdapConfig {
         ldapContextSource.setUrl("ldap://localhost:10389");
         ldapContextSource.setBase("ou=people,o=sevenSeas");
         ldapContextSource.setAnonymousReadOnly(true);
+        ldapContextSource.setAuthenticationSource(springSecurityAuthenticationSource());
         return ldapContextSource;
     }
 
@@ -41,5 +43,10 @@ public class LdapConfig {
         LdapTemplate ldapTemplate = new LdapTemplate(getContextSource());
         ldapTemplate.setIgnorePartialResultException(true);
         return ldapTemplate;
+    }
+
+    @Bean
+    public SpringSecurityAuthenticationSource springSecurityAuthenticationSource() {
+        return new SpringSecurityAuthenticationSource();
     }
 }
