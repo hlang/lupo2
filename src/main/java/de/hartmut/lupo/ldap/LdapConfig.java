@@ -16,6 +16,8 @@
 
 package de.hartmut.lupo.ldap;
 
+import de.hartmut.lupo.config.LupoConfig;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.ldap.core.LdapTemplate;
@@ -28,11 +30,14 @@ import org.springframework.security.ldap.authentication.SpringSecurityAuthentica
 @Configuration
 public class LdapConfig {
 
+    @Autowired
+    private LupoConfig lupoConfig;
+
     @Bean
     public LdapContextSource getContextSource() throws Exception{
         LdapContextSource ldapContextSource = new LdapContextSource();
-        ldapContextSource.setUrl("ldap://localhost:10389");
-        ldapContextSource.setBase("ou=people,o=sevenSeas");
+        ldapContextSource.setUrl(lupoConfig.getLdapUrl());
+        ldapContextSource.setBase(lupoConfig.getUserSearchBase());
         ldapContextSource.setAnonymousReadOnly(true);
         ldapContextSource.setAuthenticationSource(springSecurityAuthenticationSource());
         return ldapContextSource;
