@@ -16,16 +16,20 @@
 
 package de.hartmut.lupo.rest;
 
+import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
 import de.hartmut.lupo.domain.User;
 import de.hartmut.lupo.domain.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import static java.util.Comparator.comparing;
 
 /**
  * hartmut on 05.02.17.
@@ -34,6 +38,9 @@ import java.util.stream.Collectors;
 public class UserController {
 
     private final UserRepo userRepo;
+
+    final Function<User, String> byLastname = user -> StringUtils.isEmpty(user.getLastName())?"":user.getLastName();
+    final Function<User, String> byFirstname = user -> StringUtils.isEmpty(user.getFirstName())?"":user.getFirstName();
 
     @Autowired
     public UserController(UserRepo userRepo) {
@@ -62,6 +69,7 @@ public class UserController {
     ) {
         List<User> matchingUsers = userRepo.findByUidOrFistnameOrLastnameOrEmail(uid, firstname, lastname, email);
         List<User> limitedUsers = matchingUsers.stream()
+                .sorted(comparing(byLastname).thenComparing(byFirstname))
                 .skip(offset)
                 .limit(limit)
                 .collect(Collectors.toList());
