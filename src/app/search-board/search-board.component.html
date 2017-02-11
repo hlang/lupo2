@@ -1,0 +1,29 @@
+<div class="container-fluid">
+  <div class="panel">
+    <div class="panel-body">
+      <form class="form-inline">
+        <div class="form-group">
+          <div class="input-group">
+            <div class="input-group-addon"><span class="glyphicon glyphicon-search"></span></div>
+            <input type="search" class="form-control" id="uid" placeholder="search text"
+                   [(ngModel)]="searchUid" name="uid">
+          </div>
+        </div>
+        <button class="btn btn-info" (click)="getPersons(searchUid)">Search</button>
+      </form>
+
+    </div>
+  </div>
+  <div class="panel">
+    <div class="panel-body">
+      <table class="table">
+        <tr *ngFor="let person of persons">
+          <td><span class="glyphicon glyphicon-user"></span></td>
+          <td>{{person.fullName}}</td>
+          <td>{{person.uid}}</td>
+          <td>{{person.email}}</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
