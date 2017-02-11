@@ -11,7 +11,7 @@ src/main/resources/static
 
 # IDEs and editors
 /.idea
-.iml
+*.iml
 .project
 .classpath
 .c9/
