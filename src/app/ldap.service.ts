@@ -31,6 +31,9 @@ export class LdapService {
 
     private extractData(res: Response) {
         let body = res.json();
-        return body || {};
+        if (body._embedded) {
+            return body._embedded.userList;
+        }
+        return [];
     }
 }

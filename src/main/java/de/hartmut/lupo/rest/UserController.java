@@ -16,18 +16,20 @@
 
 package de.hartmut.lupo.rest;
 
-import java.util.List;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-
 import de.hartmut.lupo.domain.User;
 import de.hartmut.lupo.domain.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.PagedResources;
+import org.springframework.hateoas.PagedResources.PageMetadata;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import static java.util.Comparator.comparing;
 
@@ -53,26 +55,28 @@ public class UserController {
     }
 
     @GetMapping("/users/search")
-    public ResponseEntity<List<User>> searchUsers(
-            @RequestParam(value = "uid", required = false, defaultValue = "")
+    public ResponseEntity<PagedResources<?>> searchUsers(
+        @RequestParam(value = "uid", required = false, defaultValue = "")
                     String uid,
-            @RequestParam(value = "firstname", required = false, defaultValue = "")
+        @RequestParam(value = "firstname", required = false, defaultValue = "")
                     String firstname,
-            @RequestParam(value = "lastname", required = false, defaultValue = "")
+        @RequestParam(value = "lastname", required = false, defaultValue = "")
                     String lastname,
-            @RequestParam(value = "email", required = false, defaultValue = "")
+        @RequestParam(value = "email", required = false, defaultValue = "")
                     String email,
-            @RequestParam(value = "offset", required = false, defaultValue = "0")
-                    int offset,
-            @RequestParam(value = "limit", required = false, defaultValue = "25")
-                    int limit
+        @RequestParam(value = "number", required = false, defaultValue = "0")
+            int number,
+        @RequestParam(value = "size", required = false, defaultValue = "25")
+            int size
     ) {
         List<User> matchingUsers = userRepo.findByUidOrFistnameOrLastnameOrEmail(uid, firstname, lastname, email);
         List<User> limitedUsers = matchingUsers.stream()
                 .sorted(comparing(byLastname).thenComparing(byFirstname))
-                .skip(offset)
-                .limit(limit)
+            .skip(number * size)
+            .limit(size)
                 .collect(Collectors.toList());
-        return ResponseEntity.ok(limitedUsers);
+        PageMetadata metadata = new PageMetadata(size, number, matchingUsers.size());
+
+        return ResponseEntity.ok(new PagedResources<>(limitedUsers, metadata));
     }
 }
