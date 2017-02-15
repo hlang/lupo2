@@ -9,7 +9,7 @@
                    [(ngModel)]="searchStr" name="uid">
           </div>
         </div>
-        <button class="btn btn-info" (click)="getPersons(searchStr)">Search</button>
+        <button class="btn btn-info" (click)="getPersons(pageNumber, searchStr)">Search</button>
       </form>
 
     </div>
@@ -24,6 +24,14 @@
           <td>{{person.email}}</td>
         </tr>
       </table>
+      <div *ngIf="collectionSize > pageSize">
+        <ngb-pagination
+          [(pageSize)]="pageSize"
+          [collectionSize]="collectionSize"
+          [(page)]="pageNumber"
+          (pageChange)="pageChanged($event)"
+          size="sm"></ngb-pagination>
+      </div>
     </div>
   </div>
 </div>

@@ -1,8 +1,8 @@
 import {Injectable} from "@angular/core";
 import {Http, Response, URLSearchParams, RequestOptions} from "@angular/http";
 import {Observable} from "rxjs";
-import {Person} from "./person";
 import "rxjs/add/operator/map";
+import {SearchResult} from "./search-result";
 
 @Injectable()
 export class LdapService {
@@ -12,11 +12,8 @@ export class LdapService {
 
     private personUrl = 'users/search';  // URL to web API
 
-    getPersons(): Observable<Person[]> {
-        return this.getPersonsByAttribute();
-    }
 
-    getPersonsByAttribute(searchStr?: string,): Observable<Person[]> {
+    getPersonsByAttribute(pageNumber: number, searchStr?: string,): Observable<SearchResult> {
         let params: URLSearchParams = new URLSearchParams();
         if (searchStr) {
             params.set('uid', searchStr);
@@ -24,6 +21,8 @@ export class LdapService {
             params.set('lastname', searchStr);
             params.set('email', searchStr);
         }
+        params.set('number', String(pageNumber - 1));
+        params.set('size', '10');
         let options = new RequestOptions();
         options.search = params;
 
@@ -34,9 +33,17 @@ export class LdapService {
 
     private extractData(res: Response) {
         let body = res.json();
+        let searchResult = new SearchResult();
         if (body._embedded) {
-            return body._embedded.userList;
+            searchResult.persons = body._embedded.userList;
+            searchResult.totalElements = body.page.totalElements;
+            searchResult.size = body.page.size;
+            searchResult.totalPages = body.page.totalPages;
+            searchResult.number = body.page.number + 1;
+        } else {
+            searchResult.totalElements = 0;
         }
-        return [];
+
+        return searchResult;
     }
 }

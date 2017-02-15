@@ -5,6 +5,7 @@ import {HttpModule, JsonpModule} from "@angular/http";
 import {AppComponent} from "./app.component";
 import {SearchBoardComponent} from "./search-board/search-board.component";
 import {LdapService} from "./ldap.service";
+import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 
 @NgModule({
     declarations: [
@@ -15,7 +16,8 @@ import {LdapService} from "./ldap.service";
         BrowserModule,
         FormsModule,
         HttpModule,
-        JsonpModule
+        JsonpModule,
+        NgbModule.forRoot()
     ],
     providers: [LdapService],
     bootstrap: [AppComponent]
