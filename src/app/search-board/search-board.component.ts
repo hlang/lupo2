@@ -8,7 +8,7 @@ import {LdapService} from "../ldap.service";
     styleUrls: ['./search-board.component.css']
 })
 export class SearchBoardComponent implements OnInit {
-    searchUid: string;
+    searchStr: string;
     persons: Person[];
 
     constructor(private ldapService: LdapService) {
@@ -18,8 +18,8 @@ export class SearchBoardComponent implements OnInit {
         this.getPersons();
     }
 
-    getPersons(uid?: string): void {
-        this.ldapService.getPersonsByUid(uid)
+    getPersons(searchStr?: string): void {
+        this.ldapService.getPersonsByAttribute(searchStr)
             .subscribe(persons => this.persons = persons);
     }
 }

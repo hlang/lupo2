@@ -13,13 +13,16 @@ export class LdapService {
     private personUrl = 'users/search';  // URL to web API
 
     getPersons(): Observable<Person[]> {
-        return this.getPersonsByUid();
+        return this.getPersonsByAttribute();
     }
 
-    getPersonsByUid(uid?: string): Observable<Person[]> {
+    getPersonsByAttribute(searchStr?: string,): Observable<Person[]> {
         let params: URLSearchParams = new URLSearchParams();
-        if (uid) {
-            params.set('uid', uid);
+        if (searchStr) {
+            params.set('uid', searchStr);
+            params.set('firstname', searchStr);
+            params.set('lastname', searchStr);
+            params.set('email', searchStr);
         }
         let options = new RequestOptions();
         options.search = params;

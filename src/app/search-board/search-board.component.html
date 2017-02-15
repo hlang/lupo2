@@ -6,10 +6,10 @@
           <div class="input-group">
             <div class="input-group-addon"><span class="glyphicon glyphicon-search"></span></div>
             <input type="search" class="form-control" id="uid" placeholder="search text"
-                   [(ngModel)]="searchUid" name="uid">
+                   [(ngModel)]="searchStr" name="uid">
           </div>
         </div>
-        <button class="btn btn-info" (click)="getPersons(searchUid)">Search</button>
+        <button class="btn btn-info" (click)="getPersons(searchStr)">Search</button>
       </form>
 
     </div>
