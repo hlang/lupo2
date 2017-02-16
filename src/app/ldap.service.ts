@@ -22,7 +22,7 @@ export class LdapService {
             params.set('email', searchStr);
         }
         params.set('number', String(pageNumber - 1));
-        params.set('size', '10');
+        params.set('size', '20');
         let options = new RequestOptions();
         options.search = params;
 

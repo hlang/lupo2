@@ -27,6 +27,7 @@
       <div *ngIf="collectionSize > pageSize">
         <ngb-pagination
           [(pageSize)]="pageSize"
+          [maxSize]="5" [rotate]="true"
           [collectionSize]="collectionSize"
           [(page)]="pageNumber"
           (pageChange)="pageChanged($event)"
