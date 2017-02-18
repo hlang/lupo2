@@ -1,4 +1,5 @@
 import {Component, OnInit} from "@angular/core";
+import {Router} from "@angular/router";
 import {Person} from "../person";
 import {LdapService} from "../ldap.service";
 
@@ -14,14 +15,19 @@ export class SearchBoardComponent implements OnInit {
     pageSize = 10;
     collectionSize = 0;
 
-    constructor(private ldapService: LdapService) {
+    constructor(private router: Router,
+                private ldapService: LdapService) {
     }
 
     ngOnInit() {
-        this.getPersons(1);
+        this.getPersons();
     }
 
-    getPersons(pageNumber: number, searchStr?: string): void {
+    getPersons(searchStr?: string) {
+        this.getPersonsPage(1, searchStr);
+    }
+
+    getPersonsPage(pageNumber: number, searchStr?: string): void {
         this.ldapService.getPersonsByAttribute(pageNumber, searchStr)
             .subscribe(searchResult => {
                     this.persons = searchResult.persons;
@@ -32,7 +38,11 @@ export class SearchBoardComponent implements OnInit {
             );
     }
 
+    onSelect(person: Person) {
+        this.router.navigate(['/detail', person.dn]);
+
+    }
     public pageChanged(page: any): void {
-        this.getPersons(this.pageNumber, this.searchStr);
+        this.getPersonsPage(this.pageNumber, this.searchStr);
     };
 }

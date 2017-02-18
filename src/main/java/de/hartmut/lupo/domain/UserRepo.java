@@ -22,6 +22,8 @@ import java.util.List;
  * hartmut on 05.02.17.
  */
 public interface UserRepo {
+    User findByDn(String dn);
+
     List<User> findAll();
 
     List<User> findByUid(String uid);

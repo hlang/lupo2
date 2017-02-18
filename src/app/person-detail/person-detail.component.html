@@ -1,0 +1,54 @@
+<div class="container-fluid">
+  <div class="panel">
+    <div class="panel-body">
+      <a routerLink="/search">
+        <span class="glyphicon glyphicon-arrow-left"></span>
+      </a>
+    </div>
+  </div>
+</div>
+<div class="panel">
+  <div class="panel-body">
+    <div *ngIf="person">
+
+      <form class="form-horizontal">
+        <div class="form-group">
+          <label class="col-sm-2 control-label">DN</label>
+          <div class="col-sm-10">
+            <p class="form-control-static">{{person.dn}}</p>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Uid</label>
+          <div class="col-sm-10">
+            <p class="form-control-static">{{person.uid}}</p>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Fullname</label>
+          <div class="col-sm-10">
+            <p class="form-control-static">{{person.fullName}}</p>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Firstname</label>
+          <div class="col-sm-10">
+            <p class="form-control-static">{{person.firstName}}</p>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Lastname</label>
+          <div class="col-sm-10">
+            <p class="form-control-static">{{person.lastName}}</p>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">E-Mail</label>
+          <div class="col-sm-10">
+            <p class="form-control-static">{{person.email}}</p>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

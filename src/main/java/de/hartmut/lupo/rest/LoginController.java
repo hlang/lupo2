@@ -17,6 +17,7 @@
 package de.hartmut.lupo.rest;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
@@ -25,9 +26,10 @@ import java.security.Principal;
  * hartmut on 29.01.17.
  */
 @RestController
+@RequestMapping("/api/currentuser")
 public class LoginController {
 
-    @GetMapping("/currentuser")
+    @GetMapping
     public Principal user(Principal user) {
         return user;
     }

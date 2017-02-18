@@ -18,14 +18,14 @@ package de.hartmut.lupo.rest;
 
 import de.hartmut.lupo.domain.User;
 import de.hartmut.lupo.domain.UserRepo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.PagedResources;
 import org.springframework.hateoas.PagedResources.PageMetadata;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.function.Function;
@@ -37,7 +37,9 @@ import static java.util.Comparator.comparing;
  * hartmut on 05.02.17.
  */
 @RestController
+@RequestMapping("/api/users")
 public class UserController {
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
     private final UserRepo userRepo;
 
@@ -49,12 +51,12 @@ public class UserController {
         this.userRepo = userRepo;
     }
 
-    @GetMapping("/users")
+    @GetMapping
     public ResponseEntity<List<User>> getUsers() {
         return ResponseEntity.ok(userRepo.findAll());
     }
 
-    @GetMapping("/users/search")
+    @GetMapping("/search")
     public ResponseEntity<PagedResources<?>> searchUsers(
         @RequestParam(value = "uid", required = false, defaultValue = "")
                     String uid,
@@ -79,4 +81,17 @@ public class UserController {
 
         return ResponseEntity.ok(new PagedResources<>(limitedUsers, metadata));
     }
+
+    @GetMapping("/{dn}")
+    public ResponseEntity<User> searchUsers(@PathVariable String dn) {
+        LOGGER.debug("searchUser(): {}", dn);
+        User user = userRepo.findByDn(dn);
+        if (user == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(user);
+    }
+
+
 }

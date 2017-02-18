@@ -3,6 +3,7 @@ import {Http, Response, URLSearchParams, RequestOptions} from "@angular/http";
 import {Observable} from "rxjs";
 import "rxjs/add/operator/map";
 import {SearchResult} from "./search-result";
+import {Person} from "./person";
 
 @Injectable()
 export class LdapService {
@@ -10,8 +11,16 @@ export class LdapService {
     constructor(private http: Http) {
     }
 
-    private personUrl = 'users/search';  // URL to web API
+    private searchUrl = 'api/users/search';
+    private userUrl = 'api/users/';
 
+
+    getPersonByDn(dn: string): Observable<Person> {
+        return this.http.get(this.userUrl + dn)
+            .map(res => <Person>res.json());
+
+
+    }
 
     getPersonsByAttribute(pageNumber: number, searchStr?: string,): Observable<SearchResult> {
         let params: URLSearchParams = new URLSearchParams();
@@ -26,7 +35,7 @@ export class LdapService {
         let options = new RequestOptions();
         options.search = params;
 
-        return this.http.get(this.personUrl, options)
+        return this.http.get(this.searchUrl, options)
             .map(this.extractData);
 
     }

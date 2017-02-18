@@ -45,6 +45,11 @@ public class UserRepoImpl implements UserRepo {
     }
 
     @Override
+    public User findByDn(String dn) {
+        return ldapTemplate.lookup(dn, USER_CONTEXT_MAPPER);
+    }
+
+    @Override
     public List<User> findAll() {
         return ldapTemplate.search(query()
                         .where(LDAP_OBJECT_CLASS).is(LDAP_OBJ_CLASS_PERSON),
@@ -77,7 +82,7 @@ public class UserRepoImpl implements UserRepo {
         public User doMapFromContext(DirContextOperations context) {
             User user = new User();
 
-            user.setDn(context.getNameInNamespace());
+            user.setDn(context.getDn().toString());
             user.setFullName(context.getStringAttribute(LDAP_ATTR_CN));
             user.setFirstName(context.getStringAttribute(LDAP_ATTR_GIVEN_NAME));
             user.setLastName(context.getStringAttribute(LDAP_ATTR_SN));
