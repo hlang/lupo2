@@ -1,5 +1,5 @@
 import {Component, OnInit} from "@angular/core";
-import {ActivatedRoute, Params} from "@angular/router";
+import {Router, ActivatedRoute, Params} from "@angular/router";
 import {LdapService} from "../ldap.service";
 import {Person} from "../person";
 import "rxjs/add/operator/switchMap";
@@ -13,7 +13,8 @@ export class PersonDetailComponent implements OnInit {
     dn: string;
     person: Person;
 
-    constructor(private route: ActivatedRoute,
+    constructor(private router: Router,
+                private route: ActivatedRoute,
                 private ldapService: LdapService) {
     }
 
@@ -21,6 +22,13 @@ export class PersonDetailComponent implements OnInit {
         this.route.params
             .switchMap((params: Params) => this.ldapService.getPersonByDn(params['dn']))
             .subscribe((person: Person) => this.person = person);
+    }
+
+    deleteLdap(dn: string) {
+        this.ldapService.deletePerson(dn)
+            .subscribe(
+                res => this.router.navigate(['/search'])
+            );
     }
 
 }

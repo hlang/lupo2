@@ -83,8 +83,8 @@ public class UserController {
     }
 
     @GetMapping("/{dn}")
-    public ResponseEntity<User> searchUsers(@PathVariable String dn) {
-        LOGGER.debug("searchUser(): {}", dn);
+    public ResponseEntity<User> getUser(@PathVariable String dn) {
+        LOGGER.debug("getUser(): {}", dn);
         User user = userRepo.findByDn(dn);
         if (user == null) {
             return ResponseEntity.notFound().build();
@@ -93,5 +93,12 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
+    @DeleteMapping("/{dn}")
+    public ResponseEntity<Void> deleteUser(@PathVariable String dn) {
+        LOGGER.debug("deleteUser(): {}", dn);
+        userRepo.delete(dn);
 
+
+        return ResponseEntity.accepted().build();
+    }
 }

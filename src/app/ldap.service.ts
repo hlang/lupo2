@@ -40,6 +40,10 @@ export class LdapService {
 
     }
 
+    deletePerson(dn: string): Observable<Response> {
+        return this.http.delete(this.userUrl + dn);
+    }
+
     private extractData(res: Response) {
         let body = res.json();
         let searchResult = new SearchResult();

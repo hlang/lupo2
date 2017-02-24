@@ -21,6 +21,8 @@ package de.hartmut.lupo.ldap;
  */
 public class LdapConstants {
     public static final String LDAP_OBJECT_CLASS = "objectclass";
+    public static final String LDAP_OBJ_CLASS_TOP = "top";
+    public static final String LDAP_OBJ_CLASS_INET_ORG_PERSON = "inetOrgPerson";
     public static final String LDAP_OBJ_CLASS_PERSON = "person";
 
     public static final String LDAP_ATTR_UID = "uid";

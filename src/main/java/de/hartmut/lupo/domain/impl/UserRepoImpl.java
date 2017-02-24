@@ -20,12 +20,15 @@ import de.hartmut.lupo.domain.User;
 import de.hartmut.lupo.domain.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ldap.core.ContextMapper;
+import org.springframework.ldap.core.DirContextAdapter;
 import org.springframework.ldap.core.DirContextOperations;
 import org.springframework.ldap.core.LdapTemplate;
 import org.springframework.ldap.core.support.AbstractContextMapper;
 import org.springframework.ldap.query.LdapQuery;
+import org.springframework.ldap.support.LdapNameBuilder;
 import org.springframework.stereotype.Repository;
 
+import javax.naming.Name;
 import java.util.List;
 
 import static de.hartmut.lupo.ldap.LdapConstants.*;
@@ -76,6 +79,36 @@ public class UserRepoImpl implements UserRepo {
                 .build();
         return ldapTemplate.search(query, USER_CONTEXT_MAPPER);
     }
+
+    @Override
+    public void create(User user) {
+        DirContextAdapter context = new DirContextAdapter(buildDn(user));
+        mapToContext(user, context);
+        ldapTemplate.bind(context);
+    }
+
+    @Override
+    public void delete(String dn) {
+        ldapTemplate.unbind(dn);
+    }
+
+    private Name buildDn(User user) {
+        return LdapNameBuilder.newInstance()
+            .add(LDAP_ATTR_CN, user.getFullName())
+            .build();
+    }
+
+    private void mapToContext(User user, DirContextAdapter context) {
+        context.setAttributeValues(LDAP_OBJECT_CLASS, new String[]{
+            LDAP_OBJ_CLASS_TOP, LDAP_OBJ_CLASS_PERSON, LDAP_OBJ_CLASS_INET_ORG_PERSON});
+        context.setAttributeValue(LDAP_ATTR_CN, user.getFullName());
+        context.setAttributeValue(LDAP_ATTR_GIVEN_NAME, user.getFirstName());
+        context.setAttributeValue(LDAP_ATTR_SN, user.getLastName());
+        context.setAttributeValue(LDAP_ATTR_MAIL, user.getEmail());
+        context.setAttributeValue(LDAP_ATTR_UID, user.getUid());
+    }
+
+
 
     private final static ContextMapper<User> USER_CONTEXT_MAPPER = new AbstractContextMapper<User>() {
         @Override

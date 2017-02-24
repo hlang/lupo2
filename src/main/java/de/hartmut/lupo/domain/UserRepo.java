@@ -30,4 +30,7 @@ public interface UserRepo {
 
     List<User> findByUidOrFistnameOrLastnameOrEmail(String uid, String firstname, String lastname, String email);
 
+    void create(User user);
+
+    void delete(String dn);
 }

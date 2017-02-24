@@ -39,12 +39,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.httpBasic()
+        http.cors()
+            .and()
+            .httpBasic()
                 .and()
                 .authorizeRequests()
                 .anyRequest().fullyAuthenticated()
                 .and()
-                .formLogin();
+            .formLogin()
+            .and()
+            .csrf().disable();
     }
 
     @Autowired
@@ -61,4 +65,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         auth.eraseCredentials(false);
     }
+
+
 }
