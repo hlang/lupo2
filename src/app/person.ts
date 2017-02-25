@@ -1,4 +1,4 @@
-export interface Person {
+export class Person {
     dn: string;
     fullName: string;
     firstName: string;

@@ -1,6 +1,17 @@
 <div class="panel panel-default">
   <div class="panel-heading">
     <h4>{{title}}</h4>
+    <nav>
+      <div class="row">
+        <a class="col-md-1" routerLink="/search" routerLinkActive="text-success">
+          <span class="glyphicon glyphicon-search"></span> Search
+        </a>
+
+        <a class="col-md-1" routerLink="/add" routerLinkActive="text-success">
+          <span class="glyphicon glyphicon-plus-sign"></span> Add
+        </a>
+      </div>
+    </nav>
   </div>
   <div class="panel-body">
     <router-outlet></router-outlet>

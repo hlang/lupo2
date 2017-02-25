@@ -6,11 +6,13 @@ import {RouterModule, Routes} from "@angular/router";
 import {AppComponent} from "./app.component";
 import {SearchBoardComponent} from "./search-board/search-board.component";
 import {PersonDetailComponent} from "./person-detail/person-detail.component";
+import {PersonCreateComponent} from "./person-create/person-create.component";
 import {LdapService} from "./ldap.service";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 
 const appRoutes: Routes = [
     {path: 'search', component: SearchBoardComponent},
+    {path: 'add', component: PersonCreateComponent},
     {path: 'detail/:dn', component: PersonDetailComponent},
     {
         path: '',
@@ -23,7 +25,8 @@ const appRoutes: Routes = [
     declarations: [
         AppComponent,
         SearchBoardComponent,
-        PersonDetailComponent
+        PersonDetailComponent,
+        PersonCreateComponent
     ],
     imports: [
         RouterModule.forRoot(appRoutes),

@@ -44,6 +44,10 @@ export class LdapService {
         return this.http.delete(this.userUrl + dn);
     }
 
+    addPerson(person: Person): void {
+        this.http.post(this.userUrl, person).subscribe();
+    }
+
     private extractData(res: Response) {
         let body = res.json();
         let searchResult = new SearchResult();

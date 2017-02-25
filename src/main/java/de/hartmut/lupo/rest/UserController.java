@@ -101,4 +101,11 @@ public class UserController {
 
         return ResponseEntity.accepted().build();
     }
+
+    @PostMapping
+    public ResponseEntity<User> createUser(@RequestBody User user) {
+        LOGGER.debug("createUser(): {}", user);
+        userRepo.create(user);
+        return ResponseEntity.ok(user);
+    }
 }

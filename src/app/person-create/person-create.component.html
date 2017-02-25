@@ -1,0 +1,52 @@
+<div class="panel">
+  <div class="panel-body">
+    <form class="form-horizontal"
+          (ngSubmit)="newPerson()" #personForm="ngForm">
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Fullname</label>
+        <div class="col-sm-10">
+          <p class="form-control-static">{{person.fullName}}</p>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Uid</label>
+        <div class="col-sm-4">
+          <input type="text" class="form-control"
+                 placeholder="uid"
+                 required
+                 [(ngModel)]="person.uid" name="uid"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Firstname</label>
+        <div class="col-sm-4">
+          <input type="text" class="form-control"
+                 [(ngModel)]="person.addFirstName" name="firstName"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Lastname</label>
+        <div class="col-sm-4">
+          <input type="text" class="form-control" required
+                 [(ngModel)]="person.addLastName" name="lastName"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">E-Mail</label>
+        <div class="col-sm-4">
+          <input type="email" class="form-control"
+                 [(ngModel)]="person.email" name="email"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2"></label>
+        <div class="col-sm-4">
+          <button type="submit" class="btn btn-success" [disabled]="!personForm.form.valid">
+            <span class="glyphicon glyphicon-plus-sign"></span>
+          </button>
+        </div>
+      </div>
+    </form>
+
+  </div>
+</div>
