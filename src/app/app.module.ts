@@ -9,6 +9,7 @@ import {PersonDetailComponent} from "./person-detail/person-detail.component";
 import {PersonCreateComponent} from "./person-create/person-create.component";
 import {LdapService} from "./ldap.service";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import {EqualValidator} from "./equal-validator.directive";
 
 const appRoutes: Routes = [
     {path: 'search', component: SearchBoardComponent},
@@ -26,7 +27,8 @@ const appRoutes: Routes = [
         AppComponent,
         SearchBoardComponent,
         PersonDetailComponent,
-        PersonCreateComponent
+        PersonCreateComponent,
+        EqualValidator
     ],
     imports: [
         RouterModule.forRoot(appRoutes),

@@ -3,43 +3,64 @@
     <form class="form-horizontal"
           (ngSubmit)="newPerson()" #personForm="ngForm">
       <div class="form-group">
-        <label class="col-sm-2 control-label">Fullname</label>
-        <div class="col-sm-10">
+        <label class="col-sm-3 control-label">Fullname</label>
+        <div class="col-sm-4">
           <p class="form-control-static">{{person.fullName}}</p>
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label">Uid</label>
+        <label class="col-sm-3 control-label">Uid</label>
         <div class="col-sm-4">
           <input type="text" class="form-control"
                  placeholder="uid"
-                 required
+                 required minlength="3"
                  [(ngModel)]="person.uid" name="uid"/>
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label">Firstname</label>
+        <label class="col-sm-3 control-label">Firstname</label>
         <div class="col-sm-4">
           <input type="text" class="form-control"
                  [(ngModel)]="person.addFirstName" name="firstName"/>
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label">Lastname</label>
+        <label class="col-sm-3 control-label">Lastname</label>
         <div class="col-sm-4">
           <input type="text" class="form-control" required
                  [(ngModel)]="person.addLastName" name="lastName"/>
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label">E-Mail</label>
+        <label class="col-sm-3 control-label">E-Mail</label>
         <div class="col-sm-4">
           <input type="email" class="form-control"
+                 pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
                  [(ngModel)]="person.email" name="email"/>
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2"></label>
+        <label class="col-sm-3 control-label">Password</label>
+        <div class="col-sm-4">
+          <input type="password" class="form-control"
+                 name="password" [ngModel]="person.password"
+                 required minlength="3"
+                 validateEqual="confirmPassword" reverse="true"
+                 #password="ngModel">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-3 control-label">Confirm Password</label>
+        <div class="col-sm-4">
+          <input type="password" class="form-control"
+                 name="confirmPassword" [ngModel]="person.confirmPassword"
+                 required
+                 validateEqual="password"
+                 #confirmPassword="ngModel">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-3"></label>
         <div class="col-sm-4">
           <button type="submit" class="btn btn-success" [disabled]="!personForm.form.valid">
             <span class="glyphicon glyphicon-plus-sign"></span>
