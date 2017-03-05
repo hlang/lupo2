@@ -43,7 +43,7 @@
         <label class="col-sm-3 control-label">Password</label>
         <div class="col-sm-4">
           <input type="password" class="form-control"
-                 name="password" [ngModel]="person.password"
+                 name="password" [(ngModel)]="person.password"
                  required minlength="3"
                  validateEqual="confirmPassword" reverse="true"
                  #password="ngModel">
@@ -53,7 +53,7 @@
         <label class="col-sm-3 control-label">Confirm Password</label>
         <div class="col-sm-4">
           <input type="password" class="form-control"
-                 name="confirmPassword" [ngModel]="person.confirmPassword"
+                 name="confirmPassword" [(ngModel)]="person.confirmPassword"
                  required
                  validateEqual="password"
                  #confirmPassword="ngModel">

@@ -18,6 +18,8 @@ package de.hartmut.lupo.domain.impl;
 
 import de.hartmut.lupo.domain.User;
 import de.hartmut.lupo.domain.UserRepo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ldap.core.ContextMapper;
 import org.springframework.ldap.core.DirContextAdapter;
@@ -26,6 +28,7 @@ import org.springframework.ldap.core.LdapTemplate;
 import org.springframework.ldap.core.support.AbstractContextMapper;
 import org.springframework.ldap.query.LdapQuery;
 import org.springframework.ldap.support.LdapNameBuilder;
+import org.springframework.security.authentication.encoding.LdapShaPasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import javax.naming.Name;
@@ -39,6 +42,7 @@ import static org.springframework.ldap.query.LdapQueryBuilder.query;
  */
 @Repository
 public class UserRepoImpl implements UserRepo {
+    private final Logger LOGGER = LoggerFactory.getLogger(UserRepoImpl.class);
 
     private final LdapTemplate ldapTemplate;
 
@@ -82,6 +86,7 @@ public class UserRepoImpl implements UserRepo {
 
     @Override
     public void create(User user) {
+        LOGGER.debug("create(): user: {}", user.getFullName());
         DirContextAdapter context = new DirContextAdapter(buildDn(user));
         mapToContext(user, context);
         ldapTemplate.bind(context);
@@ -106,6 +111,10 @@ public class UserRepoImpl implements UserRepo {
         context.setAttributeValue(LDAP_ATTR_SN, user.getLastName());
         context.setAttributeValue(LDAP_ATTR_MAIL, user.getEmail());
         context.setAttributeValue(LDAP_ATTR_UID, user.getUid());
+        if (user.getPassword() != null) {
+            String encodePassword = new LdapShaPasswordEncoder().encodePassword(user.getPassword(), null);
+            context.setAttributeValue(LDAP_ATTR_USER_PASSWORD, encodePassword.getBytes());
+        }
     }
 
 

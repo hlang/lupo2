@@ -5,4 +5,5 @@ export class Person {
     lastName: string;
     email: string;
     uid: string;
+    password: string;
 }

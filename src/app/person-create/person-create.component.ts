@@ -3,7 +3,6 @@ import {Person} from "../person";
 import {LdapService} from "../ldap.service";
 
 class AddPerson extends Person {
-    password: string;
     confirmPassword: string;
 
     get addFirstName(): string {

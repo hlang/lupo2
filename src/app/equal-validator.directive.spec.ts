@@ -1,9 +1,9 @@
 /* tslint:disable:no-unused-variable */
-import {EqualValidatorDirective} from "./equal-validator.directive";
+import {EqualValidator} from "./equal-validator.directive";
 
 describe('EqualValidatorDirective', () => {
     it('should create an instance', () => {
-        const directive = new EqualValidatorDirective();
+        const directive = new EqualValidator("password", "false");
         expect(directive).toBeTruthy();
     });
 });
