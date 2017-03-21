@@ -32,6 +32,7 @@ import org.springframework.security.authentication.encoding.LdapShaPasswordEncod
 import org.springframework.stereotype.Repository;
 
 import javax.naming.Name;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import static de.hartmut.lupo.ldap.LdapConstants.*;
@@ -113,7 +114,7 @@ public class UserRepoImpl implements UserRepo {
         context.setAttributeValue(LDAP_ATTR_UID, user.getUid());
         if (user.getPassword() != null) {
             String encodePassword = new LdapShaPasswordEncoder().encodePassword(user.getPassword(), null);
-            context.setAttributeValue(LDAP_ATTR_USER_PASSWORD, encodePassword.getBytes());
+            context.setAttributeValue(LDAP_ATTR_USER_PASSWORD, encodePassword.getBytes(StandardCharsets.UTF_8));
         }
     }
 
