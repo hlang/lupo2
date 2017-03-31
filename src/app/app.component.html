@@ -1,19 +1,25 @@
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h4>{{title}}</h4>
-    <nav>
-      <div class="row">
-        <a class="col-md-1" routerLink="/search" routerLinkActive="text-success">
-          <span class="fa fa-search"></span> Search
-        </a>
-
-        <a class="col-md-1" routerLink="/add" routerLinkActive="text-success">
+<nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+          data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+          aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <a class="navbar-brand" routerLink="/search">
+    <h1 class="navbar-brand mb-0">Lupo2</h1>
+  </a>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link mb-0" routerLink="/add">
           <span class="fa fa-user-plus"></span> Add
         </a>
-      </div>
-    </nav>
+      </li>
+    </ul>
   </div>
-  <div class="panel-body">
+</nav>
+
+<div class="card">
+  <div class="card-block">
     <router-outlet></router-outlet>
   </div>
 </div>

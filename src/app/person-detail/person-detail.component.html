@@ -1,15 +1,16 @@
 <template #content let-c="close" let-d="dismiss">
   <div class="modal-header">
-    <h4 class="modal-title">Modal title</h4>
+    <h4 class="modal-title">Confirmation</h4>
     <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body">
-    <p>One fine body&hellip;</p>
+    <p>Delete user {{person.fullName}}?</p>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
+    <button type="button" class="btn btn-primary" (click)="c(true)">Yes</button>
+    <button type="button" class="btn btn-secondary" (click)="c(false)">No</button>
   </div>
 </template>
 
@@ -22,50 +23,50 @@
     </div>
   </div>
 </div>
-<div class="panel">
-  <div class="panel-body">
-    <div *ngIf="person">
-
-      <form class="form-horizontal">
-        <div class="form-group row">
-          <label class="col col-sm-2 control-label">Uid</label>
-          <div class="col col-sm-10">
-            <p class="form-control-static">{{person.uid}}</p>
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-2 control-label">Fullname</label>
-          <div class="col-sm-10">
-            <p class="form-control-static">{{person.fullName}}</p>
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-2 control-label">Firstname</label>
-          <div class="col-sm-10">
-            <p class="form-control-static">{{person.firstName}}</p>
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-2 control-label">Lastname</label>
-          <div class="col-sm-10">
-            <p class="form-control-static">{{person.lastName}}</p>
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-2 control-label">E-Mail</label>
-          <div class="col-sm-10">
-            <p class="form-control-static">{{person.email}}</p>
-          </div>
-        </div>
-      </form>
-
-    </div>
-    <div>
-      <button type="button" class="btn btn-danger btn-xs" (click)="open(content)">
-        <span class="fa fa-trash" aria-hidden="true"></span>
-      </button>
-    </div>
+<div *ngIf="person">
+  <div class="row">
+    <div class="col-1"></div>
+    <div class="col-2 label">Uid</div>
+    <div class="col-9">{{person.uid}}</div>
   </div>
+  <div class="row">
+    <div class="col-1"></div>
+    <div class="col-2 label">Fullname</div>
+    <div class="col-9">{{person.fullName}}</div>
+  </div>
+  <div class="row">
+    <div class="col-1"></div>
+    <div class="col-2 label">Firstname</div>
+    <div class="col-9">{{person.firstName}}</div>
+  </div>
+  <div class="row">
+    <div class="col-1"></div>
+    <div class="col-2 label">Lastname</div>
+    <div class="col-9">{{person.lastName}}</div>
+  </div>
+  <div class="row">
+    <div class="col-1"></div>
+    <label class="col-2 label">E-Mail</label>
+    <div class="col-9">{{person.email}}</div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-3"></div>
+  <div class="col-9">
+    <button type="button" class="btn btn-secondary btn-sm"
+            placement="bottom" ngbTooltip="Edit">
+      <span class="card-link fa fa-pencil" aria-hidden="true"></span>
+    </button>
+    <button type="button" class="btn btn-secondary btn-sm"
+            placement="bottom" ngbTooltip="Password">
+      <span class="card-link fa fa-key" aria-hidden="true"></span>
+    </button>
+    <button type="button" class="btn btn-secondary btn-sm" (click)="open(content, person.dn)"
+            placement="bottom" ngbTooltip="Delete">
+      <span class="card-link fa fa-trash" aria-hidden="true"></span>
+    </button>
+  </div>
+
 </div>
 
 

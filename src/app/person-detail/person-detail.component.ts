@@ -27,9 +27,11 @@ export class PersonDetailComponent implements OnInit {
             .subscribe((person: Person) => this.person = person);
     }
 
-    open(content) {
+    open(content, dn) {
         this.modalService.open(content).result.then((result) => {
-            ;
+            if (result) {
+                this.deleteLdap(dn);
+            }
         }, (reason) => {
             ;
         });
