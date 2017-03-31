@@ -1,6 +1,6 @@
 <div class="panel">
   <div class="panel-body">
-    <form class="form-horizontal"
+    <form class="form-horizontal" autocomplete="off"
           (ngSubmit)="newPerson()" #personForm="ngForm">
       <div class="form-group">
         <label class="col-sm-3 control-label">Fullname</label>
@@ -63,7 +63,7 @@
         <label class="col-sm-3"></label>
         <div class="col-sm-4">
           <button type="submit" class="btn btn-success" [disabled]="!personForm.form.valid">
-            <span class="glyphicon glyphicon-plus-sign"></span>
+            <span class="fa fa-user-plus" aria-hidden="true"></span>
           </button>
         </div>
       </div>

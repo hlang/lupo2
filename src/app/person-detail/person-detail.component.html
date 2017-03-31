@@ -1,9 +1,23 @@
+<template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Modal title</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>One fine body&hellip;</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
+  </div>
+</template>
 
 <div class="container-fluid">
   <div class="panel">
     <div class="panel-body">
       <a routerLink="/search">
-        <span class="glyphicon glyphicon-arrow-left"></span>
+        <span class="fa fa-arrow-left" aria-hidden="true"></span>
       </a>
     </div>
   </div>
@@ -13,31 +27,31 @@
     <div *ngIf="person">
 
       <form class="form-horizontal">
-        <div class="form-group">
-          <label class="col-sm-2 control-label">Uid</label>
-          <div class="col-sm-10">
+        <div class="form-group row">
+          <label class="col col-sm-2 control-label">Uid</label>
+          <div class="col col-sm-10">
             <p class="form-control-static">{{person.uid}}</p>
           </div>
         </div>
-        <div class="form-group">
+        <div class="form-group row">
           <label class="col-sm-2 control-label">Fullname</label>
           <div class="col-sm-10">
             <p class="form-control-static">{{person.fullName}}</p>
           </div>
         </div>
-        <div class="form-group">
+        <div class="form-group row">
           <label class="col-sm-2 control-label">Firstname</label>
           <div class="col-sm-10">
             <p class="form-control-static">{{person.firstName}}</p>
           </div>
         </div>
-        <div class="form-group">
+        <div class="form-group row">
           <label class="col-sm-2 control-label">Lastname</label>
           <div class="col-sm-10">
             <p class="form-control-static">{{person.lastName}}</p>
           </div>
         </div>
-        <div class="form-group">
+        <div class="form-group row">
           <label class="col-sm-2 control-label">E-Mail</label>
           <div class="col-sm-10">
             <p class="form-control-static">{{person.email}}</p>
@@ -47,8 +61,8 @@
 
     </div>
     <div>
-      <button type="button" class="btn btn-danger btn-xs" (click)="deleteLdap(person.dn)">
-        <span class="glyphicon glyphicon-remove-sign"></span>
+      <button type="button" class="btn btn-danger btn-xs" (click)="open(content)">
+        <span class="fa fa-trash" aria-hidden="true"></span>
       </button>
     </div>
   </div>

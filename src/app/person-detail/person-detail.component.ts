@@ -1,5 +1,7 @@
 import {Component, OnInit} from "@angular/core";
-import {Router, ActivatedRoute, Params} from "@angular/router";
+import {ActivatedRoute, Params, Router} from "@angular/router";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+
 import {LdapService} from "../ldap.service";
 import {Person} from "../person";
 import "rxjs/add/operator/switchMap";
@@ -15,13 +17,22 @@ export class PersonDetailComponent implements OnInit {
 
     constructor(private router: Router,
                 private route: ActivatedRoute,
-                private ldapService: LdapService) {
+                private ldapService: LdapService,
+                private modalService: NgbModal) {
     }
 
     ngOnInit() {
         this.route.params
             .switchMap((params: Params) => this.ldapService.getPersonByDn(params['dn']))
             .subscribe((person: Person) => this.person = person);
+    }
+
+    open(content) {
+        this.modalService.open(content).result.then((result) => {
+            ;
+        }, (reason) => {
+            ;
+        });
     }
 
     deleteLdap(dn: string) {

@@ -1,10 +1,10 @@
 <div class="container-fluid">
   <div class="panel">
     <div class="panel-body">
-      <form class="form-inline">
+      <form class="form-inline" autocomplete="off">
         <div class="form-group">
           <div class="input-group">
-            <div class="input-group-addon"><span class="glyphicon glyphicon-search"></span></div>
+            <div class="input-group-addon"><span class="fa fa-search" aria-hidden="true"></span></div>
             <input type="search" class="form-control" id="uid" placeholder="search text"
                    [(ngModel)]="searchStr" name="uid">
           </div>
@@ -18,12 +18,12 @@
     <div class="panel-body">
       <table class="table">
         <tr *ngFor="let person of persons" (click)="onSelect(person)">
-          <td><span class="glyphicon glyphicon-user"></span></td>
+          <td><span class="fa fa-user" aria-hidden="true"></span></td>
           <td>{{person.fullName}}</td>
           <td>{{person.uid}}</td>
           <td>{{person.email}}</td>
           <td>
-            <span class="glyphicon glyphicon-cog" role="button" (click)="onSelect(person)"></span>
+            <span class="fa fa-cog" aria-hidden="true" role="button" (click)="onSelect(person)"></span>
           </td>
         </tr>
       </table>
