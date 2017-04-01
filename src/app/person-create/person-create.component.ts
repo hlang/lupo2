@@ -1,6 +1,8 @@
 import {Component, OnInit} from "@angular/core";
+import {BootstrapAlertType, BootstrapGrowlService} from "ng2-bootstrap-growl";
 import {Person} from "../person";
 import {LdapService} from "../ldap.service";
+import {Router} from "@angular/router";
 
 class AddPerson extends Person {
     confirmPassword: string;
@@ -42,7 +44,9 @@ class AddPerson extends Person {
 export class PersonCreateComponent implements OnInit {
     person = new AddPerson();
 
-    constructor(private ldapService: LdapService) {
+    constructor(private router: Router,
+                private bootstrapGrowlService: BootstrapGrowlService,
+                private ldapService: LdapService) {
     }
 
     ngOnInit() {
@@ -51,5 +55,7 @@ export class PersonCreateComponent implements OnInit {
 
     newPerson(): void {
         this.ldapService.addPerson(this.person);
+        this.bootstrapGrowlService.addAlert(this.person.fullName + " created!", BootstrapAlertType.SUCCESS);
+        this.router.navigate(['/search']);
     }
 }

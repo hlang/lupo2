@@ -1,6 +1,7 @@
 import {Component, OnInit} from "@angular/core";
 import {ActivatedRoute, Params, Router} from "@angular/router";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {BootstrapAlertType, BootstrapGrowlService} from "ng2-bootstrap-growl";
 
 import {LdapService} from "../ldap.service";
 import {Person} from "../person";
@@ -18,6 +19,7 @@ export class PersonDetailComponent implements OnInit {
     constructor(private router: Router,
                 private route: ActivatedRoute,
                 private ldapService: LdapService,
+                private bootstrapGrowlService: BootstrapGrowlService,
                 private modalService: NgbModal) {
     }
 
@@ -27,21 +29,22 @@ export class PersonDetailComponent implements OnInit {
             .subscribe((person: Person) => this.person = person);
     }
 
-    open(content, dn) {
+    open(content, person) {
         this.modalService.open(content).result.then((result) => {
             if (result) {
-                this.deleteLdap(dn);
+                this.deleteLdap(person);
             }
         }, (reason) => {
             ;
         });
     }
 
-    deleteLdap(dn: string) {
-        this.ldapService.deletePerson(dn)
+    deleteLdap(person: Person) {
+        this.ldapService.deletePerson(person.dn)
             .subscribe(
                 res => this.router.navigate(['/search'])
             );
+        this.bootstrapGrowlService.addAlert(person.fullName + " deleted!", BootstrapAlertType.SUCCESS);
     }
 
 }
