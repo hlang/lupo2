@@ -4,12 +4,13 @@
       <form class="form-inline" autocomplete="off">
         <div class="form-group">
           <div class="input-group">
-            <div class="input-group-addon"><span class="fa fa-search" aria-hidden="true"></span></div>
             <input type="search" class="form-control" id="uid" placeholder="search text"
                    [(ngModel)]="searchStr" name="uid">
           </div>
         </div>
-        <button class="btn btn-info" (click)="getPersons(searchStr)">Search</button>
+        <button class="btn btn-info" (click)="getPersons(searchStr)">
+          <span class="fa fa-search" aria-label="search"></span>
+        </button>
       </form>
 
     </div>
