@@ -1,7 +1,8 @@
 import {Component, OnInit} from "@angular/core";
 import {ActivatedRoute, Params, Router} from "@angular/router";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {BootstrapAlertType, BootstrapGrowlService} from "ng2-bootstrap-growl";
+import {ToastOptions, ToastyService} from "ng2-toasty";
+
 
 import {LdapService} from "../ldap.service";
 import {Person} from "../person";
@@ -19,7 +20,7 @@ export class PersonDetailComponent implements OnInit {
     constructor(private router: Router,
                 private route: ActivatedRoute,
                 private ldapService: LdapService,
-                private bootstrapGrowlService: BootstrapGrowlService,
+                private toastyService: ToastyService,
                 private modalService: NgbModal) {
     }
 
@@ -44,7 +45,17 @@ export class PersonDetailComponent implements OnInit {
             .subscribe(
                 res => this.router.navigate(['/search'])
             );
-        this.bootstrapGrowlService.addAlert(person.fullName + " deleted!", BootstrapAlertType.SUCCESS);
+        this.addToast(person);
     }
 
+    addToast(person: Person): void {
+        let toastOptions: ToastOptions = {
+            title: "Deleted!",
+            msg: person.fullName,
+            showClose: true,
+            timeout: 5000,
+        };
+
+        this.toastyService.info(toastOptions);
+    }
 }

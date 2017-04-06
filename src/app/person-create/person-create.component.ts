@@ -1,5 +1,5 @@
 import {Component, OnInit} from "@angular/core";
-import {BootstrapAlertType, BootstrapGrowlService} from "ng2-bootstrap-growl";
+import {ToastOptions, ToastyService} from "ng2-toasty";
 import {Person} from "../person";
 import {LdapService} from "../ldap.service";
 import {Router} from "@angular/router";
@@ -45,7 +45,7 @@ export class PersonCreateComponent implements OnInit {
     person = new AddPerson();
 
     constructor(private router: Router,
-                private bootstrapGrowlService: BootstrapGrowlService,
+                private toastyService: ToastyService,
                 private ldapService: LdapService) {
     }
 
@@ -55,7 +55,18 @@ export class PersonCreateComponent implements OnInit {
 
     newPerson(): void {
         this.ldapService.addPerson(this.person);
-        this.bootstrapGrowlService.addAlert(this.person.fullName + " created!", BootstrapAlertType.SUCCESS);
+        this.addToast();
         this.router.navigate(['/search']);
+    }
+
+    addToast(): void {
+        let toastOptions: ToastOptions = {
+            title: "Created!",
+            msg: this.person.fullName,
+            showClose: true,
+            timeout: 5000
+        };
+
+        this.toastyService.success(toastOptions);
     }
 }

@@ -3,7 +3,7 @@ import {NgModule} from "@angular/core";
 import {FormsModule} from "@angular/forms";
 import {HttpModule, JsonpModule} from "@angular/http";
 import {RouterModule, Routes} from "@angular/router";
-import {BootstrapGrowlModule} from "ng2-bootstrap-growl";
+import {ToastyModule} from "ng2-toasty";
 import {AppComponent} from "./app.component";
 import {SearchBoardComponent} from "./search-board/search-board.component";
 import {PersonDetailComponent} from "./person-detail/person-detail.component";
@@ -37,7 +37,7 @@ const appRoutes: Routes = [
         FormsModule,
         HttpModule,
         JsonpModule,
-        BootstrapGrowlModule,
+        ToastyModule.forRoot(),
         NgbModule.forRoot()
     ],
     providers: [LdapService],
