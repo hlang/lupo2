@@ -1,8 +1,8 @@
 import {Component, OnInit} from "@angular/core";
-import {ToastOptions, ToastyService} from "ng2-toasty";
 import {Person} from "../person";
 import {LdapService} from "../ldap.service";
 import {Router} from "@angular/router";
+import {NotificationService} from "../notification.service";
 
 class AddPerson extends Person {
     confirmPassword: string;
@@ -45,8 +45,8 @@ export class PersonCreateComponent implements OnInit {
     person = new AddPerson();
 
     constructor(private router: Router,
-                private toastyService: ToastyService,
-                private ldapService: LdapService) {
+                private ldapService: LdapService,
+                private notificationService: NotificationService) {
     }
 
     ngOnInit() {
@@ -60,13 +60,11 @@ export class PersonCreateComponent implements OnInit {
     }
 
     addToast(): void {
-        let toastOptions: ToastOptions = {
-            title: "Created!",
-            msg: this.person.fullName,
-            showClose: true,
-            timeout: 5000
-        };
-
-        this.toastyService.success(toastOptions);
+        this.notificationService.notify(
+            {
+                severity: 'success',
+                summary: 'Created!',
+                detail: this.person.fullName
+            });
     }
 }
