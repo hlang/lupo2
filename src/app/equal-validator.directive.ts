@@ -1,5 +1,5 @@
-import {Directive, forwardRef, Attribute} from "@angular/core";
-import {Validator, AbstractControl, NG_VALIDATORS} from "@angular/forms";
+import {Attribute, Directive, forwardRef} from "@angular/core";
+import {AbstractControl, NG_VALIDATORS, Validator} from "@angular/forms";
 
 @Directive({
     selector: '[validateEqual][formControlName],[validateEqual][formControl],[validateEqual][ngModel]',
@@ -21,7 +21,7 @@ export class EqualValidator implements Validator {
         // self value
         let v = c.value;
 
-        // control vlaue
+        // control value
         let e = c.root.get(this.validateEqual);
 
         // value not equal

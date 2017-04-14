@@ -63,8 +63,8 @@ export class PersonCreateComponent implements OnInit {
         this.notificationService.notify(
             {
                 severity: 'success',
-                summary: 'Created!',
-                detail: this.person.fullName
+                summary: this.person.fullName,
+                detail: 'Created!'
             });
     }
 }

@@ -29,6 +29,8 @@ import org.springframework.ldap.core.support.AbstractContextMapper;
 import org.springframework.ldap.query.LdapQuery;
 import org.springframework.ldap.support.LdapNameBuilder;
 import org.springframework.security.authentication.encoding.LdapShaPasswordEncoder;
+import org.springframework.security.crypto.keygen.BytesKeyGenerator;
+import org.springframework.security.crypto.keygen.KeyGenerators;
 import org.springframework.stereotype.Repository;
 
 import javax.naming.Name;
@@ -46,10 +48,12 @@ public class UserRepoImpl implements UserRepo {
     private final Logger LOGGER = LoggerFactory.getLogger(UserRepoImpl.class);
 
     private final LdapTemplate ldapTemplate;
+    private final BytesKeyGenerator bytesKeyGenerator;
 
     @Autowired
     public UserRepoImpl(LdapTemplate ldapTemplate) {
         this.ldapTemplate = ldapTemplate;
+        this.bytesKeyGenerator = KeyGenerators.secureRandom();
     }
 
     @Override
@@ -98,6 +102,13 @@ public class UserRepoImpl implements UserRepo {
         ldapTemplate.unbind(dn);
     }
 
+    @Override
+    public void setPassword(User user) {
+        DirContextOperations context = ldapTemplate.lookupContext(buildDn(user));
+        context.setAttributeValue(LDAP_ATTR_USER_PASSWORD, encodePassword(user.getPassword()));
+        ldapTemplate.modifyAttributes(context);
+    }
+
     private Name buildDn(User user) {
         return LdapNameBuilder.newInstance()
             .add(LDAP_ATTR_CN, user.getFullName())
@@ -113,12 +124,16 @@ public class UserRepoImpl implements UserRepo {
         context.setAttributeValue(LDAP_ATTR_MAIL, user.getEmail());
         context.setAttributeValue(LDAP_ATTR_UID, user.getUid());
         if (user.getPassword() != null) {
-            String encodePassword = new LdapShaPasswordEncoder().encodePassword(user.getPassword(), null);
-            context.setAttributeValue(LDAP_ATTR_USER_PASSWORD, encodePassword.getBytes(StandardCharsets.UTF_8));
+            context.setAttributeValue(LDAP_ATTR_USER_PASSWORD, encodePassword(user.getPassword()));
         }
     }
 
-
+    private byte[] encodePassword(String password) {
+        byte[] salt = bytesKeyGenerator.generateKey();
+        return new LdapShaPasswordEncoder()
+            .encodePassword(password, salt)
+            .getBytes(StandardCharsets.UTF_8);
+    }
 
     private final static ContextMapper<User> USER_CONTEXT_MAPPER = new AbstractContextMapper<User>() {
         @Override

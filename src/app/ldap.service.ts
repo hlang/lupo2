@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {Http, Response, URLSearchParams, RequestOptions} from "@angular/http";
+import {Http, RequestOptions, Response, URLSearchParams} from "@angular/http";
 import {Observable} from "rxjs";
 import "rxjs/add/operator/map";
 import {SearchResult} from "./search-result";
@@ -48,6 +48,9 @@ export class LdapService {
         this.http.post(this.userUrl, person).subscribe();
     }
 
+    setPasswd(person: Person): void {
+        this.http.put(this.userUrl + "/passwd", person).subscribe();
+    }
     private extractData(res: Response) {
         let body = res.json();
         let searchResult = new SearchResult();

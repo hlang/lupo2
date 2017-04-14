@@ -108,4 +108,11 @@ public class UserController {
         userRepo.create(user);
         return ResponseEntity.ok(user);
     }
+
+    @PutMapping("/passwd")
+    public ResponseEntity<Void> setPassword(@RequestBody User user) {
+        LOGGER.debug("setPassword(): {}", user);
+        userRepo.setPassword(user);
+        return ResponseEntity.ok(null);
+    }
 }

@@ -16,6 +16,8 @@ import {NotificationService} from "../notification.service";
 export class PersonDetailComponent implements OnInit {
     dn: string;
     person: Person;
+    confirmPasswordStr: String;
+    passwordEdit: Boolean = false;
 
     constructor(private router: Router,
                 private route: ActivatedRoute,
@@ -45,15 +47,32 @@ export class PersonDetailComponent implements OnInit {
             .subscribe(
                 res => this.router.navigate(['/search'])
             );
-        this.addToast(person);
-    }
-
-    addToast(person: Person): void {
         this.notificationService.notify(
             {
                 severity: 'info',
-                summary: 'Deleted!',
-                detail: person.fullName
+                summary: person.fullName,
+                detail: 'Deleted!'
             });
+    }
+
+    savePassword() {
+        this.ldapService.setPasswd(this.person);
+        this.notificationService.notify(
+            {
+                severity: 'success',
+                summary: this.person.fullName,
+                detail: 'Password updated!'
+            });
+        this.passwordEdit = false;
+    }
+
+    togglePasswordEdit(): void {
+        this.passwordEdit = !this.passwordEdit;
+        this.resetPassword();
+    }
+
+    private resetPassword(): void {
+        this.confirmPasswordStr = "";
+        this.person.password = "";
     }
 }

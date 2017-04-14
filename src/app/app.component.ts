@@ -23,7 +23,6 @@ export class AppComponent {
     subscribeToNotifications() {
         this.subscription = this.notificationService.notificationChange
             .subscribe(notification => {
-                this.msgs.length = 0;
                 this.msgs.push(notification);
             });
     }

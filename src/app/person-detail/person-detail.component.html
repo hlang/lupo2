@@ -58,6 +58,7 @@
       <span class="card-link fa fa-pencil" aria-hidden="true"></span>
     </button>
     <button type="button" class="btn btn-secondary btn-sm"
+            (click)="togglePasswordEdit()"
             placement="bottom" ngbTooltip="Password">
       <span class="card-link fa fa-key" aria-hidden="true"></span>
     </button>
@@ -67,6 +68,46 @@
     </button>
   </div>
 
+</div>
+
+<div *ngIf="passwordEdit">
+  <form autocomplete="off" #passwordForm="ngForm"
+        (submit)="savePassword()">
+    <div class="row pb-4"></div>
+    <div class="row pb-2">
+      <div class="col-1"></div>
+      <div class="col-2 label">Password</div>
+      <div class="col-5">
+        <input type="password" class="form-control"
+               name="password"
+               [(ngModel)]="person.password"
+               required minlength="3"
+               validateEqual="confirmPassword" reverse="true"
+               #password="ngModel">
+      </div>
+    </div>
+    <div class="row pb-2">
+      <div class="col-1"></div>
+      <div class="col-2 label">Confirm Password</div>
+      <div class="col-5">
+        <input type="password" class="form-control"
+               name="confirmPassword"
+               [(ngModel)]="confirmPasswordStr"
+               required
+               validateEqual="password"
+               #confirmPassword="ngModel">
+      </div>
+    </div>
+
+    <div class="row pt-2">
+      <div class="col-3"></div>
+      <div class="col-9">
+        <button type="submit" class="btn btn-success" [disabled]="!passwordForm.form.valid">
+          <span class="fa fa-save" aria-label="save password"></span>
+        </button>
+      </div>
+    </div>
+  </form>
 </div>
 
 
