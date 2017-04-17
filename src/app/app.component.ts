@@ -2,6 +2,8 @@ import {Component} from "@angular/core";
 import {NotificationService} from "./notification.service";
 import {Subscription} from "rxjs/Subscription";
 import {Message} from "primeng/primeng";
+import {Http} from "@angular/http";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'app-root',
@@ -13,11 +15,18 @@ export class AppComponent {
     msgs: Message[] = [];
     subscription: Subscription;
 
-    constructor(private notificationService: NotificationService) {
+    constructor(private http: Http,
+                private router: Router,
+                private notificationService: NotificationService) {
     }
 
     ngOnInit() {
-        this.subscribeToNotifications();
+
+    }
+
+    logout() {
+        this.http.post("logout", {})
+            .subscribe();
     }
 
     subscribeToNotifications() {
