@@ -1,0 +1,8 @@
+<h2>LOGIN</h2>
+<form (ngSubmit)="login()">
+  <input type="text" name="user" placeholder="Username" [(ngModel)]="username">
+  <input type="password" name="pass" placeholder="Password" [(ngModel)]="password"/>
+  <button type="submit" class="btn btn-success">
+    <span class="fa fa-sign-in" aria-label="login"></span>
+  </button>
+</form>

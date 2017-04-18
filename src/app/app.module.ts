@@ -14,6 +14,9 @@ import {EqualValidator} from "./equal-validator.directive";
 import {NotificationService} from "./notification.service";
 import {PageNotFoundComponent} from "./page-not-found/page-not-found.component";
 import {AppRoutingModule} from "./app-routing/app-routing.module";
+import {AuthGuardService} from "./auth-guard.service";
+import {AuthService} from "./auth.service";
+import {LoginComponent} from "./login/login.component";
 
 
 @NgModule({
@@ -23,7 +26,8 @@ import {AppRoutingModule} from "./app-routing/app-routing.module";
         PersonDetailComponent,
         PersonCreateComponent,
         EqualValidator,
-        PageNotFoundComponent
+        PageNotFoundComponent,
+        LoginComponent
     ],
     imports: [
         AppRoutingModule,
@@ -36,7 +40,9 @@ import {AppRoutingModule} from "./app-routing/app-routing.module";
     ],
     providers: [
         LdapService,
-        NotificationService
+        NotificationService,
+        AuthService,
+        AuthGuardService
     ],
     bootstrap: [AppComponent]
 })
