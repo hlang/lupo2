@@ -11,25 +11,19 @@ export class LoginComponent {
 
     username: string;
     password: string;
-    message: string;
+    loginError: boolean = false;
 
     constructor(public authService: AuthService, public router: Router) {
-        this.setMessage();
-    }
-
-    setMessage() {
-        this.message = 'Logged ' + (this.authService.isLoggedIn ? 'in' : 'out');
     }
 
     login() {
-        this.message = 'Trying to log in ...';
         this.authService.login(this.username, this.password)
             .subscribe(() => {
-                    this.setMessage();
                     if (this.authService.isLoggedIn) {
                         let redirect = this.authService.redirectUrl ? this.authService.redirectUrl : '/';
                         this.router.navigate([redirect]);
                     }
+                this.loginError = !this.authService.isLoggedIn;
                 }
             );
     }

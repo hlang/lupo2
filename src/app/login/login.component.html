@@ -6,3 +6,6 @@
     <span class="fa fa-sign-in" aria-label="login"></span>
   </button>
 </form>
+<div class="alert alert-danger" *ngIf="loginError">
+  Login failed! Please try again.
+</div>

@@ -19,7 +19,7 @@ export class AuthService {
         return this.http.get('api/currentuser')
             .map(
                 response => {
-                    if (response.json().name) {
+                    if (this.isJsonResponse(response) && response.json().name) {
                         this.isLoggedIn = true;
                         return true
                     } else {
@@ -28,6 +28,10 @@ export class AuthService {
                     }
                 }
             );
+    }
+
+    private isJsonResponse(response): boolean {
+        return response.headers.get('content-type').includes("application/json");
     }
 
     login(username: string, password: string): Observable<boolean> {
