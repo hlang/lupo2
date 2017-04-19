@@ -29,6 +29,7 @@ public class LupoConfig {
     private String ldapServerPort;
     private String userSearchBase;
     private String groupSearchBase;
+    private String adminBase = "ou=system";
 
     public String getLdapUrl() {
         return "ldap://"+ getLdapServerHost() + ":" + getLdapServerPort();
@@ -64,5 +65,13 @@ public class LupoConfig {
 
     public void setGroupSearchBase(String groupSearchBase) {
         this.groupSearchBase = groupSearchBase;
+    }
+
+    public String getAdminBase() {
+        return adminBase;
+    }
+
+    public void setAdminBase(String adminBase) {
+        this.adminBase = adminBase;
     }
 }

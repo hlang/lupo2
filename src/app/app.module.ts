@@ -17,6 +17,7 @@ import {AppRoutingModule} from "./app-routing/app-routing.module";
 import {AuthGuardService} from "./auth-guard.service";
 import {AuthService} from "./auth.service";
 import {LoginComponent} from "./login/login.component";
+import {AdminGuardService} from "./admin-guard.service";
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import {LoginComponent} from "./login/login.component";
         LdapService,
         NotificationService,
         AuthService,
-        AuthGuardService
+        AuthGuardService,
+        AdminGuardService
     ],
     bootstrap: [AppComponent]
 })

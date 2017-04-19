@@ -8,6 +8,7 @@ import "rxjs/add/operator/delay";
 @Injectable()
 export class AuthService {
     isLoggedIn: boolean = false;
+    isAdmin: boolean = false;
     redirectUrl: string;
 
     constructor(private http: Http) {
@@ -21,6 +22,7 @@ export class AuthService {
                 response => {
                     if (this.isJsonResponse(response) && response.json().name) {
                         this.isLoggedIn = true;
+                        this.isAdmin = response.json().admin;
                         return true
                     } else {
                         this.isLoggedIn = false;

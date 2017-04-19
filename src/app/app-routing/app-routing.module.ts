@@ -6,12 +6,13 @@ import {PersonCreateComponent} from "../person-create/person-create.component";
 import {SearchBoardComponent} from "../search-board/search-board.component";
 import {AuthGuardService} from "../auth-guard.service";
 import {LoginComponent} from "../login/login.component";
+import {AdminGuardService} from "../admin-guard.service";
 
 const appRoutes: Routes = [
     {
         path: 'search',
         component: SearchBoardComponent,
-        canActivate: [AuthGuardService]
+        canActivate: [AuthGuardService, AdminGuardService]
     },
     {path: 'add', component: PersonCreateComponent},
     {
