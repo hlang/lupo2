@@ -15,7 +15,7 @@
 </template>
 
 <div class="container-fluid">
-  <div class="panel">
+  <div class="panel" *ngIf="isAdmin()">
     <div class="panel-body">
       <a routerLink="/search">
         <span class="fa fa-arrow-left" aria-hidden="true"></span>
@@ -63,7 +63,8 @@
       <span class="card-link fa fa-key" aria-hidden="true"></span>
     </button>
     <button type="button" class="btn btn-secondary btn-sm" (click)="open(content, person)"
-            placement="bottom" ngbTooltip="Delete">
+            placement="bottom" ngbTooltip="Delete"
+            *ngIf="isAdmin()">
       <span class="card-link fa fa-trash" aria-hidden="true"></span>
     </button>
   </div>

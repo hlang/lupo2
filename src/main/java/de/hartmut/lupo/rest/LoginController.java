@@ -19,12 +19,15 @@ package de.hartmut.lupo.rest;
 import de.hartmut.lupo.config.LupoConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ldap.support.LdapUtils;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.ldap.userdetails.LdapUserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.naming.InvalidNameException;
+import javax.naming.ldap.LdapName;
 import java.security.Principal;
 
 /**
@@ -42,7 +45,7 @@ public class LoginController {
     }
 
     @GetMapping
-    public ResponseEntity<LoginUser> myuser(Principal user) {
+    public ResponseEntity<LoginUser> getUser(Principal user) throws InvalidNameException {
 
         LoginUser loginUser = new LoginUser();
         loginUser.setName(user.getName());
@@ -52,6 +55,7 @@ public class LoginController {
             if (principal instanceof LdapUserDetails) {
                 LdapUserDetails ldapUserDetails = (LdapUserDetails) principal;
                 loginUser.setAdmin(isAdminUser(ldapUserDetails));
+                loginUser.setDn(buildCn(ldapUserDetails.getDn()));
             }
         }
         return ResponseEntity.ok(loginUser);
@@ -59,5 +63,13 @@ public class LoginController {
 
     private boolean isAdminUser(LdapUserDetails ldapUserDetails) {
         return ldapUserDetails.getDn().endsWith(lupoConfig.getAdminBase());
+    }
+
+    private String buildCn(String dn) throws InvalidNameException {
+        LdapName dnName = new LdapName(dn);
+        LdapName searchBase = new LdapName(lupoConfig.getUserSearchBase());
+        LdapName ldapName = LdapUtils.removeFirst(dnName, searchBase);
+
+        return ldapName.toString();
     }
 }

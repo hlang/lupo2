@@ -24,6 +24,14 @@ export class AppComponent implements OnInit, OnDestroy {
         this.subscribeToNotifications();
     }
 
+    isAdmin(): boolean {
+        return this.authService.isAdmin;
+    }
+
+    isLoggedIn(): boolean {
+        return this.authService.isLoggedIn
+    }
+
     logout() {
         this.authService.logout();
         this.router.navigate(['/login']);

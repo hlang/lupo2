@@ -9,6 +9,7 @@ import "rxjs/add/operator/delay";
 export class AuthService {
     isLoggedIn: boolean = false;
     isAdmin: boolean = false;
+    userDn: string;
     redirectUrl: string;
 
     constructor(private http: Http) {
@@ -21,13 +22,16 @@ export class AuthService {
             .map(
                 response => {
                     if (this.isJsonResponse(response) && response.json().name) {
-                        this.isLoggedIn = true;
-                        this.isAdmin = response.json().admin;
-                        return true
-                    } else {
-                        this.isLoggedIn = false;
-                        return false
+                        let body = response.json();
+                        if (body.name) {
+                            this.isLoggedIn = true;
+                            this.isAdmin = body.admin;
+                            this.userDn = body.dn;
+                            return true;
+                        }
                     }
+                    this.isLoggedIn = false;
+                    return false;
                 }
             );
     }
@@ -48,6 +52,8 @@ export class AuthService {
     }
 
     logout(): void {
+        this.isAdmin = null;
+        this.userDn = null;
         this.http.post("logout", {})
             .subscribe(
                 data => this.isLoggedIn = false,

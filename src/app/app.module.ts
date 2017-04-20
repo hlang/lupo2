@@ -18,6 +18,7 @@ import {AuthGuardService} from "./auth-guard.service";
 import {AuthService} from "./auth.service";
 import {LoginComponent} from "./login/login.component";
 import {AdminGuardService} from "./admin-guard.service";
+import {AdminUserGuardService} from "./admin-user-guard.service";
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import {AdminGuardService} from "./admin-guard.service";
         NotificationService,
         AuthService,
         AuthGuardService,
-        AdminGuardService
+        AdminGuardService,
+        AdminUserGuardService
     ],
     bootstrap: [AppComponent]
 })

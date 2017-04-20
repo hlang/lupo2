@@ -22,6 +22,7 @@ package de.hartmut.lupo.rest;
 public class LoginUser {
 
     private String name;
+    private String dn;
     private Boolean isAdmin;
 
     public String getName() {
@@ -30,6 +31,14 @@ public class LoginUser {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDn() {
+        return dn;
+    }
+
+    public void setDn(String dn) {
+        this.dn = dn;
     }
 
     public Boolean getAdmin() {

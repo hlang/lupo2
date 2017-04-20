@@ -7,6 +7,7 @@ import {LdapService} from "../ldap.service";
 import {Person} from "../person";
 import "rxjs/add/operator/switchMap";
 import {NotificationService} from "../notification.service";
+import {AuthService} from "../auth.service";
 
 @Component({
     selector: 'app-person-detail',
@@ -23,6 +24,7 @@ export class PersonDetailComponent implements OnInit {
                 private route: ActivatedRoute,
                 private ldapService: LdapService,
                 private notificationService: NotificationService,
+                private authService: AuthService,
                 private modalService: NgbModal) {
     }
 
@@ -30,6 +32,10 @@ export class PersonDetailComponent implements OnInit {
         this.route.params
             .switchMap((params: Params) => this.ldapService.getPersonByDn(params['dn']))
             .subscribe((person: Person) => this.person = person);
+    }
+
+    isAdmin(): boolean {
+        return this.authService.isAdmin;
     }
 
     open(content, person) {

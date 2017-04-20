@@ -20,8 +20,11 @@ export class LoginComponent {
         this.authService.login(this.username, this.password)
             .subscribe(() => {
                     if (this.authService.isLoggedIn) {
-                        let redirect = this.authService.redirectUrl ? this.authService.redirectUrl : '/';
-                        this.router.navigate([redirect]);
+                        if (this.authService.isAdmin) {
+                            this.router.navigate(['/']);
+                        } else {
+                            this.router.navigate(['/detail', this.authService.userDn])
+                        }
                     }
                 this.loginError = !this.authService.isLoggedIn;
                 }
