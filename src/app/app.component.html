@@ -1,4 +1,8 @@
-<nav class="navbar navbar-toggleable-sm navbar-inverse bg-primary ">
+<nav class="navbar navbar-toggleable-sm"
+     [ngClass]="{
+    'navbar-inverse' : isLoggedIn(), 'navbar-light': !isLoggedIn(),
+    'bg-primary': isLoggedIn(), 'bg-faded': !isLoggedIn()
+  }">
   <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
           data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
           aria-label="Toggle navigation">

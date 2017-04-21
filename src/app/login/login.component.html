@@ -1,11 +1,13 @@
-<h2>LOGIN</h2>
-<form (ngSubmit)="login()">
-  <input type="text" name="user" placeholder="Username" [(ngModel)]="username">
-  <input type="password" name="pass" placeholder="Password" [(ngModel)]="password"/>
-  <button type="submit" class="btn btn-success">
-    <span class="fa fa-sign-in" aria-label="login"></span>
-  </button>
-</form>
-<div class="alert alert-danger" *ngIf="loginError">
-  Login failed! Please try again.
+<div class="center mt-5 mb-5">
+  <h4>LOGIN</h4>
+  <form (ngSubmit)="login()">
+    <input type="text" name="user" placeholder="Username" [(ngModel)]="username">
+    <input type="password" name="pass" placeholder="Password" [(ngModel)]="password"/>
+    <button type="submit" class="btn btn-success">
+      <span class="fa fa-sign-in" aria-label="login"></span>
+    </button>
+  </form>
+  <div class="alert alert-danger" *ngIf="loginError">
+    Login failed! Please try again.
+  </div>
 </div>

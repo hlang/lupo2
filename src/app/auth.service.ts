@@ -21,7 +21,7 @@ export class AuthService {
         return this.http.get('api/currentuser')
             .map(
                 response => {
-                    if (this.isJsonResponse(response) && response.json().name) {
+                    if (AuthService.isJsonResponse(response) && response.json().name) {
                         let body = response.json();
                         if (body.name) {
                             this.isLoggedIn = true;
@@ -36,7 +36,7 @@ export class AuthService {
             );
     }
 
-    private isJsonResponse(response): boolean {
+    private static isJsonResponse(response): boolean {
         return response.headers.get('content-type').includes("application/json");
     }
 
