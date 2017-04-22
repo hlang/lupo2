@@ -18,15 +18,15 @@ export class LoginComponent {
 
     login() {
         this.authService.login(this.username, this.password)
-            .subscribe(() => {
-                    if (this.authService.isLoggedIn) {
-                        if (this.authService.isAdmin) {
+            .subscribe(authStatus => {
+                if (authStatus.isLoggedIn) {
+                    if (authStatus.isAdmin) {
                             this.router.navigate(['/']);
                         } else {
-                            this.router.navigate(['/detail', this.authService.userDn])
+                        this.router.navigate(['/detail', authStatus.userDn])
                         }
                     }
-                this.loginError = !this.authService.isLoggedIn;
+                this.loginError = !authStatus.isLoggedIn;
                 }
             );
     }

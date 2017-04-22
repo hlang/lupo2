@@ -5,33 +5,34 @@ import "rxjs/add/observable/of";
 import "rxjs/add/operator/do";
 import "rxjs/add/operator/delay";
 
-@Injectable()
-export class AuthService {
+export class AuthStatus {
     isLoggedIn: boolean = false;
     isAdmin: boolean = false;
     userDn: string;
-    redirectUrl: string;
+}
+
+@Injectable()
+export class AuthService {
+    authStatus: AuthStatus = new AuthStatus();
 
     constructor(private http: Http) {
-        this.authenticate()
-            .subscribe();
     }
 
-    authenticate(): Observable<boolean> {
+    authenticate(): Observable<AuthStatus> {
         return this.http.get('api/currentuser')
             .map(
                 response => {
+                    let status = new AuthStatus();
                     if (AuthService.isJsonResponse(response) && response.json().name) {
                         let body = response.json();
                         if (body.name) {
-                            this.isLoggedIn = true;
-                            this.isAdmin = body.admin;
-                            this.userDn = body.dn;
-                            return true;
+                            status.isLoggedIn = true;
+                            status.isAdmin = body.admin;
+                            status.userDn = body.dn;
                         }
                     }
-                    this.isLoggedIn = false;
-                    return false;
+                    this.authStatus = status;
+                    return status;
                 }
             );
     }
@@ -40,7 +41,7 @@ export class AuthService {
         return response.headers.get('content-type').includes("application/json");
     }
 
-    login(username: string, password: string): Observable<boolean> {
+    login(username: string, password: string): Observable<AuthStatus> {
         let headers = new Headers({'Content-Type': 'application/x-www-form-urlencoded'});
         let urlSearchParams = new URLSearchParams();
         urlSearchParams.append('username', username);
@@ -52,14 +53,9 @@ export class AuthService {
     }
 
     logout(): void {
-        this.isAdmin = null;
-        this.userDn = null;
+        this.authStatus = new AuthStatus();
         this.http.post("logout", {})
-            .subscribe(
-                data => this.isLoggedIn = false,
-                error => this.isLoggedIn = false,
-                () => this.isLoggedIn = false
-            );
+            .subscribe();
 
     }
 }

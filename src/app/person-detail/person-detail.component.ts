@@ -35,7 +35,7 @@ export class PersonDetailComponent implements OnInit {
     }
 
     isAdmin(): boolean {
-        return this.authService.isAdmin;
+        return this.authService.authStatus.isAdmin;
     }
 
     open(content, person) {

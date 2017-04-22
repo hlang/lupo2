@@ -17,7 +17,6 @@ import {AppRoutingModule} from "./app-routing/app-routing.module";
 import {AuthGuardService} from "./auth-guard.service";
 import {AuthService} from "./auth.service";
 import {LoginComponent} from "./login/login.component";
-import {AdminGuardService} from "./admin-guard.service";
 import {AdminUserGuardService} from "./admin-user-guard.service";
 
 
@@ -45,7 +44,6 @@ import {AdminUserGuardService} from "./admin-user-guard.service";
         NotificationService,
         AuthService,
         AuthGuardService,
-        AdminGuardService,
         AdminUserGuardService
     ],
     bootstrap: [AppComponent]

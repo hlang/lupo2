@@ -1,21 +1,30 @@
 import {Injectable} from "@angular/core";
-import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot} from "@angular/router";
-import {AuthService} from "./auth.service";
+import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from "@angular/router";
+import {AuthService, AuthStatus} from "./auth.service";
+import {Observable} from "rxjs/Observable";
 
 @Injectable()
 export class AdminUserGuardService implements CanActivate {
-    constructor(private authService: AuthService) {
+    constructor(private authService: AuthService,
+                private router: Router) {
     }
 
-    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-        return this.authService.isLoggedIn &&
-            (this.authService.isAdmin || this.isUserDn(route));
+    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
+        return this.authService.authenticate()
+            .map(authStatus => {
+                let isAdmin = authStatus.isLoggedIn && authStatus.isAdmin;
+                if (isAdmin || AdminUserGuardService.isUserDn(authStatus, route)) {
+                    return true;
+                }
+                this.router.navigate(['/login']);
+                return false;
+            });
     }
 
-    isUserDn(route: ActivatedRouteSnapshot): boolean {
+    private static isUserDn(authStatus: AuthStatus, route: ActivatedRouteSnapshot): boolean {
         let userCn = route.paramMap.get('dn');
         return (userCn != null)
-            && (this.authService.userDn != null)
-            && this.authService.userDn.startsWith(decodeURIComponent(userCn));
+            && (authStatus.userDn != null)
+            && authStatus.userDn.startsWith(decodeURIComponent(userCn));
     }
 }

@@ -6,20 +6,19 @@ import {PersonCreateComponent} from "../person-create/person-create.component";
 import {SearchBoardComponent} from "../search-board/search-board.component";
 import {AuthGuardService} from "../auth-guard.service";
 import {LoginComponent} from "../login/login.component";
-import {AdminGuardService} from "../admin-guard.service";
 import {AdminUserGuardService} from "../admin-user-guard.service";
 
 const appRoutes: Routes = [
     {
         path: 'search',
         component: SearchBoardComponent,
-        canActivate: [AuthGuardService, AdminGuardService]
+        canActivate: [AuthGuardService]
     },
     {path: 'add', component: PersonCreateComponent},
     {
         path: 'detail/:dn',
         component: PersonDetailComponent,
-        canActivate: [AuthGuardService, AdminUserGuardService]
+        canActivate: [AdminUserGuardService]
     },
     {
         path: 'login',
