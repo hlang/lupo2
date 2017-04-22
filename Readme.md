@@ -18,7 +18,11 @@ Run `ng generate component component-name` to generate a new component. You can 
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+The build steps are:
+
+`yarn install`: uses yarn to install npm packages   
+`npm run build`: runs ng production build  
+`mvn clean install`: create spring-boot jar-file
 
 ## Running unit tests
 
@@ -32,7 +36,7 @@ Before running the tests make sure you are serving the app via `ng serve`.
 ## Running backend proxy
 To proxy the backend, adjust the proxy.conf.json file
 
-Run `ng serve --proxy-config proxy.conf.json`
+Run `npm run start`
 
 ## Deploying to GitHub Pages
 
