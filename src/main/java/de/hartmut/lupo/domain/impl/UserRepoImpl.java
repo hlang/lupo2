@@ -143,6 +143,9 @@ public class UserRepoImpl implements UserRepo {
             user.setDn(context.getDn().toString());
             user.setFullName(context.getStringAttribute(LDAP_ATTR_CN));
             user.setFirstName(context.getStringAttribute(LDAP_ATTR_GIVEN_NAME));
+            if (user.getFirstName() == null) {
+                user.setFirstName(context.getStringAttribute(LDAP_ATTR_GN));
+            }
             user.setLastName(context.getStringAttribute(LDAP_ATTR_SN));
             user.setEmail(context.getStringAttribute(LDAP_ATTR_MAIL));
             user.setUid(context.getStringAttribute(LDAP_ATTR_UID));

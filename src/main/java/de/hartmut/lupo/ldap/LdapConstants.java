@@ -28,6 +28,7 @@ public class LdapConstants {
     public static final String LDAP_ATTR_UID = "uid";
     public static final String LDAP_ATTR_CN = "cn";
     public static final String LDAP_ATTR_GIVEN_NAME = "givenName";
+    public static final String LDAP_ATTR_GN = "gn";
     public static final String LDAP_ATTR_SN = "sn";
     public static final String LDAP_ATTR_MAIL = "mail";
     public static final String LDAP_ATTR_USER_PASSWORD = "userPassword";
