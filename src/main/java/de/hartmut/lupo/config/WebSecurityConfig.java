@@ -63,7 +63,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .contextSource().url(lupoConfig.getLdapUrl());
         auth.ldapAuthentication()
                 .userDnPatterns("uid={0},ou=system")
-                .contextSource().url(lupoConfig.getLdapUrl());
+            .groupSearchBase(lupoConfig.getGroupSearchBase())
+            .contextSource()
+            .url(lupoConfig.getLdapUrl());
 
         auth.eraseCredentials(false);
     }
