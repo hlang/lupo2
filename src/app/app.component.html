@@ -14,13 +14,15 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item" routerLinkActive="active" *ngIf="isAdmin()">
-        <a class="nav-link mb-0" routerLink="/add">
+        <a class="nav-link mb-0" routerLink="/add"
+           pTooltip="Add new user" tooltipPosition="bottom">
           <span class="fa fa-user-plus"></span> Add
         </a>
       </li>
     </ul>
     <div class="navbar-nav" *ngIf="isLoggedIn()">
-      <a class="app-nav nav-item nav-link mb-0 a active " (click)="logout()">
+      <a class="app-nav nav-item nav-link mb-0 a active " (click)="logout()"
+         pTooltip="Logout" tooltipPosition="bottom">
         <span class="fa fa-sign-out"></span>
       </a>
     </div>
