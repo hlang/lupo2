@@ -3,7 +3,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {NgModule} from "@angular/core";
 import {FormsModule} from "@angular/forms";
 import {HttpModule, JsonpModule} from "@angular/http";
-import {GrowlModule, PanelModule, TooltipModule} from "primeng/primeng";
+import {DataTableModule, GrowlModule, PanelModule, SharedModule, TooltipModule} from "primeng/primeng";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 
 import {AppComponent} from "./app.component";
@@ -41,6 +41,8 @@ import {AdminUserGuardService} from "./admin-user-guard.service";
         GrowlModule,
         PanelModule,
         TooltipModule,
+        DataTableModule,
+        SharedModule,
         NgbModule.forRoot()
     ],
     providers: [

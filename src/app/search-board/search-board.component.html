@@ -15,19 +15,30 @@
 
     </div>
   </div>
-  <div class="panel">
+  <div class="panel mt-2">
     <div class="panel-body">
-      <table class="table">
-        <tr *ngFor="let person of persons" (click)="onSelect(person)">
-          <td><span class="fa fa-user" aria-hidden="true"></span></td>
-          <td>{{person.fullName}}</td>
-          <td>{{person.uid}}</td>
-          <td>{{person.email}}</td>
-          <td>
+      <p-dataTable [value]="persons" [resizableColumns]="true">
+        <p-column field="fullName" header="fullName">
+          <ng-template let-person="rowData" pTemplate="body">
+            <div class="person-col" (click)="onSelect(person)">{{person.fullName}}</div>
+          </ng-template>
+        </p-column>
+        <p-column field="uid">
+          <ng-template let-person="rowData" pTemplate="body">
+            <div class="person-col" (click)="onSelect(person)">{{person.uid}}</div>
+          </ng-template>
+        </p-column>
+        <p-column field="email">
+          <ng-template let-person="rowData" pTemplate="body">
+            <div class="person-col" (click)="onSelect(person)">{{person.email}}</div>
+          </ng-template>
+        </p-column>
+        <p-column [style]="{'width':'40px'}">
+          <ng-template let-person="rowData" pTemplate="body">
             <span class="fa fa-cog" aria-hidden="true" role="button" (click)="onSelect(person)"></span>
-          </td>
-        </tr>
-      </table>
+          </ng-template>
+        </p-column>
+      </p-dataTable>
       <div *ngIf="collectionSize > pageSize">
         <ngb-pagination
           [(pageSize)]="pageSize"
