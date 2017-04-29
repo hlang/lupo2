@@ -98,6 +98,15 @@ public class UserRepoImpl implements UserRepo {
     }
 
     @Override
+    public void update(User user) {
+        DirContextOperations context = ldapTemplate.lookupContext(buildDn(user));
+        context.setAttributeValue(LDAP_ATTR_GIVEN_NAME, user.getFirstName());
+        context.setAttributeValue(LDAP_ATTR_SN, user.getLastName());
+        context.setAttributeValue(LDAP_ATTR_MAIL, user.getEmail());
+        ldapTemplate.modifyAttributes(context);
+    }
+
+    @Override
     public void delete(String dn) {
         ldapTemplate.unbind(dn);
     }

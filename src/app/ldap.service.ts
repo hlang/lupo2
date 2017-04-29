@@ -48,6 +48,10 @@ export class LdapService {
         this.http.post(this.userUrl, person).subscribe();
     }
 
+    updatePerson(person: Person): Observable<Response> {
+        return this.http.put(this.userUrl, person);
+    }
+
     setPasswd(person: Person): void {
         this.http.put(this.userUrl + "/passwd", person).subscribe();
     }

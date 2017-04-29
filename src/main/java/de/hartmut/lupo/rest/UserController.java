@@ -43,8 +43,8 @@ public class UserController {
 
     private final UserRepo userRepo;
 
-    final Function<User, String> byLastname = user -> StringUtils.isEmpty(user.getLastName())?"":user.getLastName();
-    final Function<User, String> byFirstname = user -> StringUtils.isEmpty(user.getFirstName())?"":user.getFirstName();
+    private final Function<User, String> byLastname = user -> StringUtils.isEmpty(user.getLastName()) ? "" : user.getLastName();
+    private final Function<User, String> byFirstname = user -> StringUtils.isEmpty(user.getFirstName()) ? "" : user.getFirstName();
 
     @Autowired
     public UserController(UserRepo userRepo) {
@@ -107,6 +107,13 @@ public class UserController {
         LOGGER.debug("createUser(): {}", user);
         userRepo.create(user);
         return ResponseEntity.ok(user);
+    }
+
+    @PutMapping()
+    public ResponseEntity<Void> updateUser(@RequestBody User user) {
+        LOGGER.debug("updateUser(): {}", user);
+        userRepo.update(user);
+        return ResponseEntity.ok(null);
     }
 
     @PutMapping("/passwd")

@@ -15,10 +15,12 @@ import {AuthService} from "../auth.service";
     styleUrls: ['./person-detail.component.css']
 })
 export class PersonDetailComponent implements OnInit {
-    dn: string;
-    person: Person;
+
+    person: Person = new Person;
+    personUpdated: Person = new Person;
     confirmPasswordStr: String;
     passwordEdit: Boolean = false;
+    personEdit: Boolean = false;
 
     constructor(private router: Router,
                 private route: ActivatedRoute,
@@ -30,7 +32,11 @@ export class PersonDetailComponent implements OnInit {
 
     ngOnInit() {
         this.route.params
-            .switchMap((params: Params) => this.ldapService.getPersonByDn(params['dn']))
+            .subscribe((params: Params) => this.loadPerson(params['dn']));
+    }
+
+    private loadPerson(dn: string) {
+        this.ldapService.getPersonByDn(dn)
             .subscribe((person: Person) => this.person = person);
     }
 
@@ -61,6 +67,22 @@ export class PersonDetailComponent implements OnInit {
             });
     }
 
+    updatePerson(person: Person) {
+        this.ldapService.updatePerson(person)
+            .subscribe(
+                () => {
+                    this.personEdit = false;
+                    this.loadPerson(person.dn);
+                    this.notificationService.notify(
+                        {
+                            severity: 'success',
+                            summary: person.fullName,
+                            detail: 'Updated!'
+                        })
+                }
+            );
+    }
+
     savePassword() {
         this.ldapService.setPasswd(this.person);
         this.notificationService.notify(
@@ -74,6 +96,13 @@ export class PersonDetailComponent implements OnInit {
 
     togglePasswordEdit(): void {
         this.passwordEdit = !this.passwordEdit;
+        this.resetPassword();
+    }
+
+
+    togglePersonEdit(): void {
+        this.personEdit = !this.personEdit;
+        this.personUpdated = Person.fromPerson(this.person);
         this.resetPassword();
     }
 

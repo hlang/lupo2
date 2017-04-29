@@ -32,6 +32,8 @@ public interface UserRepo {
 
     void create(User user);
 
+    void update(User user);
+
     void delete(String dn);
 
     void setPassword(User user);
