@@ -18,6 +18,13 @@
   <div class="panel mt-2">
     <div class="panel-body">
       <p-dataTable [value]="persons" [resizableColumns]="true">
+        <p-column [style]="{'width':'40px'}">
+          <ng-template let-person="rowData" pTemplate="body">
+            <div class="person-col" (click)="onSelect(person)">
+              <span class="fa fa-user" aria-hidden="true"></span>
+            </div>
+          </ng-template>
+        </p-column>
         <p-column field="fullName" header="fullName">
           <ng-template let-person="rowData" pTemplate="body">
             <div class="person-col" (click)="onSelect(person)">{{person.fullName}}</div>
@@ -35,7 +42,9 @@
         </p-column>
         <p-column [style]="{'width':'40px'}">
           <ng-template let-person="rowData" pTemplate="body">
-            <span class="fa fa-cog" aria-hidden="true" role="button" (click)="onSelect(person)"></span>
+            <div class="person-col" (click)="onSelect(person)">
+              <span class="person-col fa fa-cog" aria-hidden="true"></span>
+            </div>
           </ng-template>
         </p-column>
       </p-dataTable>
