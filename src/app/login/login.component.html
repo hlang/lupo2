@@ -1,25 +1,28 @@
-<div class="ui-g">
-  <div class="ui-g-4"></div>
-  <div class="ui-g-4">
-    <p-panel class="mt-5 mb-5" header="Login">
-      <form (ngSubmit)="login()">
-        <div>
-          <input type="text" name="user" placeholder="Username" [(ngModel)]="username">
-        </div>
-        <div class="mt-2">
-          <input type="password" name="pass" placeholder="Password" [(ngModel)]="password"/>
-        </div>
-        <div class="mt-2">
-          <button type="submit" class="btn btn-sm btn-success">
-            <span class="fa fa-sign-in" aria-label="login"></span>
-          </button>
-        </div>
-      </form>
-      <div class="alert alert-danger mt-2" *ngIf="loginError">
-        Login failed! Please try again.
-      </div>
-    </p-panel>
+<div class="container">
 
+  <form class="form-signin" (ngSubmit)="login()">
+    <h4 class="form-signin-heading">Please login</h4>
+    <label for="inputEmail" class="sr-only">Username</label>
+    <input type="text" id="inputEmail" class="form-control"
+           placeholder="Username"
+           pInputText
+           required autofocus
+           name="user"
+           [(ngModel)]="username">
+    <label for="inputPassword" class="sr-only">Password</label>
+    <input type="password" id="inputPassword" class="form-control"
+           placeholder="Password"
+           name="pass"
+           required
+           [(ngModel)]="password">
+
+    <button class="btn btn-lg btn-primary btn-block" type="submit">
+      <span class="fa fa-sign-in" aria-label="login"></span>
+    </button>
+  </form>
+  <div class="alert alert-danger mt-2" *ngIf="loginError">
+    Login failed! Please try again.
   </div>
-  <div class="ui-g-4"></div>
-</div>
+
+</div> <!-- /container -->
+
