@@ -19,6 +19,8 @@ import {AuthGuardService} from "./auth-guard.service";
 import {AuthService} from "./auth.service";
 import {LoginComponent} from "./login/login.component";
 import {AdminUserGuardService} from "./admin-user-guard.service";
+import {InfoService} from "./info.service";
+import {AppFooterComponent} from "./app-footer/app-footer.component";
 
 
 @NgModule({
@@ -29,7 +31,8 @@ import {AdminUserGuardService} from "./admin-user-guard.service";
         PersonCreateComponent,
         EqualValidator,
         PageNotFoundComponent,
-        LoginComponent
+        LoginComponent,
+        AppFooterComponent
     ],
     imports: [
         AppRoutingModule,
@@ -50,6 +53,7 @@ import {AdminUserGuardService} from "./admin-user-guard.service";
         LdapService,
         NotificationService,
         AuthService,
+        InfoService,
         AuthGuardService,
         AdminUserGuardService
     ],

@@ -11,7 +11,7 @@ import {AuthService} from "./auth.service";
     styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit, OnDestroy {
-    title = 'Lupo2';
+    title = 'Lupo';
     msgs: Message[] = [];
     subscription: Subscription;
 
