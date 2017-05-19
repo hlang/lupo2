@@ -39,8 +39,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
     subscribeToNotifications() {
         this.subscription = this.notificationService.notificationChange
-            .subscribe(notification => {
-                this.msgs.push(notification);
+            .subscribe(message => {
+                this.msgs = [message];
             });
     }
 
