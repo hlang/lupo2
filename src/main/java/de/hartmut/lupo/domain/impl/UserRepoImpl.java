@@ -34,6 +34,10 @@ import org.springframework.security.crypto.keygen.KeyGenerators;
 import org.springframework.stereotype.Repository;
 
 import javax.naming.Name;
+import javax.naming.directory.Attribute;
+import javax.naming.directory.BasicAttribute;
+import javax.naming.directory.DirContext;
+import javax.naming.directory.ModificationItem;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
@@ -99,7 +103,13 @@ public class UserRepoImpl implements UserRepo {
 
     @Override
     public void update(User user) {
-        DirContextOperations context = ldapTemplate.lookupContext(buildDn(user));
+        Name dn = buildDn(user);
+        DirContextOperations context = ldapTemplate.lookupContext(dn);
+        if (context.attributeExists(LDAP_ATTR_GN)) {
+            Attribute attr = new BasicAttribute(LDAP_ATTR_GN);
+            ModificationItem item = new ModificationItem(DirContext.REMOVE_ATTRIBUTE, attr);
+            ldapTemplate.modifyAttributes(dn, new ModificationItem[]{item});
+        }
         context.setAttributeValue(LDAP_ATTR_GIVEN_NAME, user.getFirstName());
         context.setAttributeValue(LDAP_ATTR_SN, user.getLastName());
         context.setAttributeValue(LDAP_ATTR_MAIL, user.getEmail());
