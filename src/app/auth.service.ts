@@ -1,5 +1,6 @@
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs/Observable";
+import {ArrayObservable} from "rxjs/observable/ArrayObservable";
 import {Headers, Http, RequestOptions} from "@angular/http";
 import "rxjs/add/observable/of";
 import "rxjs/add/operator/do";
@@ -16,6 +17,10 @@ export class AuthService {
     authStatus: AuthStatus = new AuthStatus();
 
     constructor(private http: Http) {
+    }
+
+    currentAuthStatus(): Observable<AuthStatus> {
+        return ArrayObservable.of(this.authStatus)
     }
 
     authenticate(): Observable<AuthStatus> {

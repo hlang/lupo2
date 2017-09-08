@@ -10,7 +10,7 @@ export class AdminUserGuardService implements CanActivate {
     }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
-        return this.authService.authenticate()
+        return this.authService.currentAuthStatus()
             .map(authStatus => {
                 let isAdmin = authStatus.isLoggedIn && authStatus.isAdmin;
                 if (isAdmin || AdminUserGuardService.isUserDn(authStatus, route)) {

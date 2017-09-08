@@ -10,7 +10,7 @@ export class AuthGuardService implements CanActivate {
     }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
-        return this.authService.authenticate()
+        return this.authService.currentAuthStatus()
             .map(authStatus => {
                 let isAdmin = authStatus.isLoggedIn && authStatus.isAdmin;
                 if (!isAdmin) {
