@@ -15,4 +15,13 @@ export class NotificationService {
         this.notificationChange.next(msg);
     }
 
+    notifyServerError(detail: string): void {
+        this.notify(
+            {
+                severity: 'error',
+                summary: 'Server error!',
+                detail: detail
+            });
+    }
+
 }

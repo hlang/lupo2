@@ -37,7 +37,9 @@ export class PersonDetailComponent implements OnInit {
 
     private loadPerson(dn: string) {
         this.ldapService.getPersonByDn(dn)
-            .subscribe((person: Person) => this.person = person);
+            .subscribe((person: Person) => this.person = person,
+                response => this.notificationService.notifyServerError('Loading DN ' + dn + ' failed! Status: ' + response.status)
+            );
     }
 
     isAdmin(): boolean {
@@ -50,7 +52,7 @@ export class PersonDetailComponent implements OnInit {
                 this.deleteLdap(person);
             }
         }, (reason) => {
-            ;
+
         });
     }
 

@@ -44,8 +44,8 @@ export class LdapService {
         return this.http.delete(this.userUrl + dn);
     }
 
-    addPerson(person: Person): void {
-        this.http.post(this.userUrl, person).subscribe();
+    addPerson(person: Person): Observable<Response> {
+        return this.http.post(this.userUrl, person);
     }
 
     updatePerson(person: Person): Observable<Response> {

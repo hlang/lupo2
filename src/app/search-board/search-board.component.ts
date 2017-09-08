@@ -2,6 +2,7 @@ import {Component, OnInit} from "@angular/core";
 import {Router} from "@angular/router";
 import {Person} from "../person";
 import {LdapService} from "../ldap.service";
+import {NotificationService} from "../notification.service";
 
 @Component({
     selector: 'app-search-board',
@@ -16,7 +17,8 @@ export class SearchBoardComponent implements OnInit {
     collectionSize = 0;
 
     constructor(private router: Router,
-                private ldapService: LdapService) {
+                private ldapService: LdapService,
+                private notificationService: NotificationService,) {
     }
 
     ngOnInit() {
@@ -34,6 +36,9 @@ export class SearchBoardComponent implements OnInit {
                     this.pageNumber = searchResult.number;
                     this.pageSize = searchResult.size;
                     this.collectionSize = searchResult.totalElements;
+                },
+                response => {
+                    this.notificationService.notifyServerError('Loading LDAP entries failed! Status: ' + response.status)
                 }
             );
     }

@@ -54,9 +54,13 @@ export class PersonCreateComponent implements OnInit {
 
 
     newPerson(): void {
-        this.ldapService.addPerson(this.person);
-        this.addToast();
-        this.router.navigate(['/search']);
+        this.ldapService.addPerson(this.person)
+            .subscribe(response => {
+                    this.addToast();
+                    this.router.navigate(['/search']);
+                },
+                error => this.notificationService.notifyServerError('Adding Person failed! ' + error.json().message));
+
     }
 
     addToast(): void {
