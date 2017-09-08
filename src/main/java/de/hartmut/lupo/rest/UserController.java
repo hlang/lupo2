@@ -82,7 +82,7 @@ public class UserController {
         return ResponseEntity.ok(new PagedResources<>(limitedUsers, metadata));
     }
 
-    @GetMapping("/{dn}")
+    @GetMapping("/{dn:.+}")
     public ResponseEntity<User> getUser(@PathVariable String dn) {
         LOGGER.debug("getUser(): {}", dn);
         User user = userRepo.findByDn(dn);
@@ -93,7 +93,7 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
-    @DeleteMapping("/{dn}")
+    @DeleteMapping("/{dn:.+}")
     public ResponseEntity<Void> deleteUser(@PathVariable String dn) {
         LOGGER.debug("deleteUser(): {}", dn);
         userRepo.delete(dn);
