@@ -20,7 +20,7 @@ import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.endsWith;
 import static org.hamcrest.CoreMatchers.startsWith;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 /**
  * hartmut on 21.01.17.

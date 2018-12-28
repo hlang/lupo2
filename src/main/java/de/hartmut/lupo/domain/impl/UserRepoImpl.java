@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 Hartmut Lang
+ * Copyright 2017-2018 Hartmut Lang
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,9 +28,9 @@ import org.springframework.ldap.core.LdapTemplate;
 import org.springframework.ldap.core.support.AbstractContextMapper;
 import org.springframework.ldap.query.LdapQuery;
 import org.springframework.ldap.support.LdapNameBuilder;
-import org.springframework.security.authentication.encoding.LdapShaPasswordEncoder;
 import org.springframework.security.crypto.keygen.BytesKeyGenerator;
 import org.springframework.security.crypto.keygen.KeyGenerators;
+import org.springframework.security.crypto.password.LdapShaPasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import javax.naming.Name;
@@ -148,9 +148,8 @@ public class UserRepoImpl implements UserRepo {
     }
 
     private byte[] encodePassword(String password) {
-        byte[] salt = bytesKeyGenerator.generateKey();
-        return new LdapShaPasswordEncoder()
-            .encodePassword(password, salt)
+        return new LdapShaPasswordEncoder(bytesKeyGenerator)
+            .encode(password)
             .getBytes(StandardCharsets.UTF_8);
     }
 

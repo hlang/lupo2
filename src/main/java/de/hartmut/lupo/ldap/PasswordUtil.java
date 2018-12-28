@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 Hartmut Lang
+ * Copyright 2017-2018 Hartmut Lang
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,9 +20,8 @@
  */
 package de.hartmut.lupo.ldap;
 
-import org.springframework.security.authentication.encoding.LdapShaPasswordEncoder;
-
-import java.security.NoSuchAlgorithmException;
+import org.springframework.security.crypto.keygen.BytesKeyGenerator;
+import org.springframework.security.crypto.password.LdapShaPasswordEncoder;
 
 /**
  *
@@ -30,7 +29,19 @@ import java.security.NoSuchAlgorithmException;
  */
 public class PasswordUtil {
 
-    public static String ldapEncryptSHA(String pwd) throws NoSuchAlgorithmException {
-        return new LdapShaPasswordEncoder().encodePassword(pwd, null);
+    public static String ldapEncryptSHA(String pwd) {
+        return new LdapShaPasswordEncoder(new NoSaltGenerator()).encode(pwd);
+    }
+
+    private static class NoSaltGenerator implements BytesKeyGenerator {
+        @Override
+        public int getKeyLength() {
+            return 0;
+        }
+
+        @Override
+        public byte[] generateKey() {
+            return null;
+        }
     }
 }

@@ -53,7 +53,7 @@ export class LdapService {
     }
 
     setPasswd(person: Person): void {
-        this.http.put(this.userUrl + "/passwd", person).subscribe();
+        this.http.put(this.userUrl + "passwd", person).subscribe();
     }
     private extractData(res: Response) {
         let body = res.json();
