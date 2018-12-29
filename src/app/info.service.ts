@@ -1,18 +1,19 @@
 import {Injectable} from "@angular/core";
-import {Http} from "@angular/http";
 import {Observable} from "rxjs/Observable";
+import {HttpClient} from "@angular/common/http";
 
 @Injectable()
 export class InfoService {
 
-    constructor(private http: Http) {
+
+    constructor(private http: HttpClient) {
     }
 
-    private infoUrl = 'info/';
+    private infoUrl = 'actuator/info';
 
 
     getInfoVersion(): Observable<string> {
-        return this.http.get(this.infoUrl)
-            .map(res => res.json().build.version);
+        return this.http.get<any>(this.infoUrl)
+            .map(res => res.build.version);
     }
 }

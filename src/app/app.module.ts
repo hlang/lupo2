@@ -1,8 +1,8 @@
 import {BrowserModule} from "@angular/platform-browser";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {HttpClientModule} from "@angular/common/http";
 import {NgModule} from "@angular/core";
 import {FormsModule} from "@angular/forms";
-import {HttpModule, JsonpModule} from "@angular/http";
 import {DataTableModule, GrowlModule, InputTextModule, PanelModule, SharedModule, TooltipModule} from "primeng/primeng";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 
@@ -39,8 +39,7 @@ import {AppFooterComponent} from "./app-footer/app-footer.component";
         BrowserModule,
         BrowserAnimationsModule,
         FormsModule,
-        HttpModule,
-        JsonpModule,
+        HttpClientModule,
         GrowlModule,
         PanelModule,
         TooltipModule,

@@ -1,10 +1,10 @@
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs/Observable";
 import {ArrayObservable} from "rxjs/observable/ArrayObservable";
-import {Headers, Http, RequestOptions} from "@angular/http";
 import "rxjs/add/observable/of";
 import "rxjs/add/operator/do";
 import "rxjs/add/operator/delay";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 
 export class AuthStatus {
     isLoggedIn: boolean = false;
@@ -16,7 +16,7 @@ export class AuthStatus {
 export class AuthService {
     authStatus: AuthStatus = new AuthStatus();
 
-    constructor(private http: Http) {
+    constructor(private http: HttpClient) {
     }
 
     currentAuthStatus(): Observable<AuthStatus> {
@@ -24,36 +24,32 @@ export class AuthService {
     }
 
     authenticate(): Observable<AuthStatus> {
-        return this.http.get('api/currentuser')
+        return this.http.get<any>('api/currentuser')
             .map(
-                response => {
-                    let status = new AuthStatus();
-                    if (AuthService.isJsonResponse(response) && response.json().name) {
-                        let body = response.json();
-                        if (body.name) {
-                            status.isLoggedIn = true;
-                            status.isAdmin = body.admin;
-                            status.userDn = body.dn;
-                        }
+                status => {
+                    const authStatus = new AuthStatus();
+                    if (status && status.name) {
+                        authStatus.isLoggedIn = true;
+                        authStatus.isAdmin = status.admin;
+                        authStatus.userDn = status.dn;
                     }
-                    this.authStatus = status;
-                    return status;
-                }
-            );
-    }
-
-    private static isJsonResponse(response): boolean {
-        return response.headers.get('content-type').includes("application/json");
+                    console.log(authStatus);
+                    this.authStatus = authStatus;
+                    return authStatus;
+                });
     }
 
     login(username: string, password: string): Observable<AuthStatus> {
-        let headers = new Headers({'Content-Type': 'application/x-www-form-urlencoded'});
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/x-www-form-urlencoded'
+            })
+        };
         let urlSearchParams = new URLSearchParams();
         urlSearchParams.append('username', username);
         urlSearchParams.append('password', password);
         let body = urlSearchParams.toString();
-        let options = new RequestOptions({headers: headers});
-        return this.http.post('login', body, options)
+        return this.http.post('login', body, httpOptions)
             .switchMap(() => this.authenticate());
     }
 

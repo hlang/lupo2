@@ -1,14 +1,14 @@
 import {Injectable} from "@angular/core";
-import {Http, RequestOptions, Response, URLSearchParams} from "@angular/http";
 import {Observable} from "rxjs";
 import "rxjs/add/operator/map";
 import {SearchResult} from "./search-result";
 import {Person} from "./person";
+import {HttpClient, HttpParams} from "@angular/common/http";
 
 @Injectable()
 export class LdapService {
 
-    constructor(private http: Http) {
+    constructor(private http: HttpClient) {
     }
 
     private searchUrl = 'api/users/search';
@@ -16,48 +16,45 @@ export class LdapService {
 
 
     getPersonByDn(dn: string): Observable<Person> {
-        return this.http.get(this.userUrl + dn)
-            .map(res => <Person>res.json());
-
-
+        return this.http.get<Person>(this.userUrl + dn);
     }
 
     getPersonsByAttribute(pageNumber: number, searchStr?: string,): Observable<SearchResult> {
-        let params: URLSearchParams = new URLSearchParams();
+        let params = new HttpParams();
         if (searchStr) {
-            params.set('uid', searchStr);
-            params.set('firstname', searchStr);
-            params.set('lastname', searchStr);
-            params.set('email', searchStr);
+            params = params
+                .set('uid', searchStr)
+                .set('firstname', searchStr)
+                .set('lastname', searchStr)
+                .set('email', searchStr);
         }
-        params.set('number', String(pageNumber - 1));
-        params.set('size', '20');
-        let options = new RequestOptions();
-        options.search = params;
-
+        params = params
+            .set('number', String(pageNumber - 1))
+            .set('size', '20');
+        const options = {params: params};
         return this.http.get(this.searchUrl, options)
-            .map(this.extractData);
+            .map(body => this.extractData(body));
 
     }
 
-    deletePerson(dn: string): Observable<Response> {
+    deletePerson(dn: string): Observable<Object> {
         return this.http.delete(this.userUrl + dn);
     }
 
-    addPerson(person: Person): Observable<Response> {
-        return this.http.post(this.userUrl, person);
+    addPerson(person: Person): Observable<Object> {
+        return this.http.post<Person>(this.userUrl, person);
     }
 
-    updatePerson(person: Person): Observable<Response> {
-        return this.http.put(this.userUrl, person);
+    updatePerson(person: Person): Observable<Object> {
+        return this.http.put<Person>(this.userUrl, person);
     }
 
     setPasswd(person: Person): void {
         this.http.put(this.userUrl + "passwd", person).subscribe();
     }
-    private extractData(res: Response) {
-        let body = res.json();
-        let searchResult = new SearchResult();
+
+    private extractData(body: any) {
+        const searchResult = new SearchResult();
         if (body._embedded) {
             searchResult.persons = body._embedded.userList;
             searchResult.totalElements = body.page.totalElements;
