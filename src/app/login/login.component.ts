@@ -17,6 +17,7 @@ export class LoginComponent {
     }
 
     login() {
+        this.loginError = false;
         this.authService.login(this.username, this.password)
             .subscribe(authStatus => {
                 if (authStatus.isLoggedIn) {
