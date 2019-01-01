@@ -3,16 +3,8 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {HttpClientModule} from "@angular/common/http";
 import {NgModule} from "@angular/core";
 import {FormsModule} from "@angular/forms";
-import {
-    DataTableModule,
-    GrowlModule,
-    InputTextModule,
-    PaginatorModule,
-    PanelModule,
-    SharedModule,
-    TooltipModule
-} from "primeng/primeng";
-import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import {GrowlModule, InputTextModule, PaginatorModule, PanelModule, SharedModule, TooltipModule} from "primeng/primeng";
+import {TableModule} from "primeng/table";
 
 import {AppComponent} from "./app.component";
 import {SearchBoardComponent} from "./search-board/search-board.component";
@@ -29,6 +21,7 @@ import {LoginComponent} from "./login/login.component";
 import {AdminUserGuardService} from "./admin-user-guard.service";
 import {InfoService} from "./info.service";
 import {AppFooterComponent} from "./app-footer/app-footer.component";
+import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 
 
 @NgModule({
@@ -51,7 +44,7 @@ import {AppFooterComponent} from "./app-footer/app-footer.component";
         GrowlModule,
         PanelModule,
         TooltipModule,
-        DataTableModule,
+        TableModule,
         PaginatorModule,
         InputTextModule,
         SharedModule,
