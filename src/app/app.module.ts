@@ -3,7 +3,16 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {HttpClientModule} from "@angular/common/http";
 import {NgModule} from "@angular/core";
 import {FormsModule} from "@angular/forms";
-import {GrowlModule, InputTextModule, PaginatorModule, PanelModule, SharedModule, TooltipModule} from "primeng/primeng";
+import {
+    ConfirmationService,
+    ConfirmDialogModule,
+    GrowlModule,
+    InputTextModule,
+    PaginatorModule,
+    PanelModule,
+    SharedModule,
+    TooltipModule
+} from "primeng/primeng";
 import {TableModule} from "primeng/table";
 
 import {AppComponent} from "./app.component";
@@ -46,6 +55,7 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
         TooltipModule,
         TableModule,
         PaginatorModule,
+        ConfirmDialogModule,
         InputTextModule,
         SharedModule,
         NgbModule.forRoot()
@@ -53,6 +63,7 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
     providers: [
         LdapService,
         NotificationService,
+        ConfirmationService,
         AuthService,
         InfoService,
         AuthGuardService,

@@ -8,6 +8,7 @@ import {Person} from "../person";
 import "rxjs/add/operator/switchMap";
 import {NotificationService} from "../notification.service";
 import {AuthService} from "../auth.service";
+import {ConfirmationService} from "primeng/api";
 
 @Component({
     selector: 'app-person-detail',
@@ -27,6 +28,7 @@ export class PersonDetailComponent implements OnInit {
                 private ldapService: LdapService,
                 private notificationService: NotificationService,
                 private authService: AuthService,
+                private confirmationService: ConfirmationService,
                 private modalService: NgbModal) {
     }
 
@@ -46,16 +48,18 @@ export class PersonDetailComponent implements OnInit {
         return this.authService.authStatus.isAdmin;
     }
 
-    open(content, person) {
-        this.modalService.open(content).result.then((result) => {
-            if (result) {
-                this.deleteLdap(person);
+    confirm() {
+        this.confirmationService.confirm({
+            message: `Delete user ${this.person.fullName}?`,
+            header: 'Confirmation',
+            icon: 'pi pi-exclamation-triangle',
+            accept: () => {
+                this.deleteLdap(this.person);
+            },
+            reject: () => {
             }
-        }, (reason) => {
-
         });
     }
-
     deleteLdap(person: Person) {
         this.ldapService.deletePerson(person.dn)
             .subscribe(
