@@ -49,13 +49,10 @@
         </p-column>
       </p-dataTable>
       <div *ngIf="collectionSize > pageSize">
-        <ngb-pagination
-          [(pageSize)]="pageSize"
-          [maxSize]="5" [rotate]="true"
-          [collectionSize]="collectionSize"
-          [(page)]="pageNumber"
-          (pageChange)="pageChanged($event)"
-          size="sm"></ngb-pagination>
+        <p-paginator [rows]="pageSize"
+                     [totalRecords]="collectionSize"
+                     (onPageChange)="pageChanged($event)">
+        </p-paginator>
       </div>
     </div>
   </div>

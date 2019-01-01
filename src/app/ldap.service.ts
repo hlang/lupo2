@@ -29,7 +29,7 @@ export class LdapService {
                 .set('email', searchStr);
         }
         params = params
-            .set('number', String(pageNumber - 1))
+            .set('number', String(pageNumber))
             .set('size', '20');
         const options = {params: params};
         return this.http.get(this.searchUrl, options)

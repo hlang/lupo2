@@ -3,7 +3,15 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {HttpClientModule} from "@angular/common/http";
 import {NgModule} from "@angular/core";
 import {FormsModule} from "@angular/forms";
-import {DataTableModule, GrowlModule, InputTextModule, PanelModule, SharedModule, TooltipModule} from "primeng/primeng";
+import {
+    DataTableModule,
+    GrowlModule,
+    InputTextModule,
+    PaginatorModule,
+    PanelModule,
+    SharedModule,
+    TooltipModule
+} from "primeng/primeng";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 
 import {AppComponent} from "./app.component";
@@ -44,6 +52,7 @@ import {AppFooterComponent} from "./app-footer/app-footer.component";
         PanelModule,
         TooltipModule,
         DataTableModule,
+        PaginatorModule,
         InputTextModule,
         SharedModule,
         NgbModule.forRoot()

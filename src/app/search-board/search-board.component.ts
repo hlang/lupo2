@@ -12,7 +12,7 @@ import {NotificationService} from "../notification.service";
 export class SearchBoardComponent implements OnInit {
     searchStr: string;
     persons: Person[];
-    pageNumber = 1;
+    pageNumber = 0;
     pageSize = 10;
     collectionSize = 0;
 
@@ -26,14 +26,13 @@ export class SearchBoardComponent implements OnInit {
     }
 
     getPersons(searchStr?: string) {
-        this.getPersonsPage(1, searchStr);
+        this.getPersonsPage(0, searchStr);
     }
 
     getPersonsPage(pageNumber: number, searchStr?: string): void {
         this.ldapService.getPersonsByAttribute(pageNumber, searchStr)
             .subscribe(searchResult => {
                     this.persons = searchResult.persons;
-                    this.pageNumber = searchResult.number;
                     this.pageSize = searchResult.size;
                     this.collectionSize = searchResult.totalElements;
                 },
@@ -47,7 +46,9 @@ export class SearchBoardComponent implements OnInit {
         this.router.navigate(['/detail', person.dn]);
 
     }
-    public pageChanged(page: any): void {
+    public pageChanged(event: any): void {
+        console.log(event);
+        this.pageNumber = event.page;
         this.getPersonsPage(this.pageNumber, this.searchStr);
     };
 }
