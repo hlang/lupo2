@@ -2,7 +2,8 @@ import {Component, OnInit} from "@angular/core";
 import {Router} from "@angular/router";
 import {Person} from "../person";
 import {LdapService} from "../ldap.service";
-import {NotificationService} from "../notification.service";
+import {MessageService} from "primeng/api";
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
     selector: 'app-search-board',
@@ -18,7 +19,7 @@ export class SearchBoardComponent implements OnInit {
 
     constructor(private router: Router,
                 private ldapService: LdapService,
-                private notificationService: NotificationService,) {
+                private messageService: MessageService) {
     }
 
     ngOnInit() {
@@ -36,9 +37,7 @@ export class SearchBoardComponent implements OnInit {
                     this.pageSize = searchResult.size;
                     this.collectionSize = searchResult.totalElements;
                 },
-                response => {
-                    this.notificationService.notifyServerError('Loading LDAP entries failed! Status: ' + response.status)
-                }
+                error => this.handleError(error)
             );
     }
 
@@ -47,8 +46,15 @@ export class SearchBoardComponent implements OnInit {
 
     }
     public pageChanged(event: any): void {
-        console.log(event);
         this.pageNumber = event.page;
         this.getPersonsPage(this.pageNumber, this.searchStr);
     };
+
+    private handleError(error: HttpErrorResponse) : void {
+        this.messageService.add(
+            {severity: 'error',
+                summary: 'Server error!',
+                detail: `Loading LDAP entries failed! Status: ${error.status}`
+            })
+    }
 }

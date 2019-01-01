@@ -2,7 +2,8 @@ import {Component, OnInit} from "@angular/core";
 import {Person} from "../person";
 import {LdapService} from "../ldap.service";
 import {Router} from "@angular/router";
-import {NotificationService} from "../notification.service";
+import {MessageService} from "primeng/api";
+import {HttpErrorResponse} from "@angular/common/http";
 
 class AddPerson extends Person {
     confirmPassword: string;
@@ -46,7 +47,7 @@ export class PersonCreateComponent implements OnInit {
 
     constructor(private router: Router,
                 private ldapService: LdapService,
-                private notificationService: NotificationService) {
+                private messageService: MessageService) {
     }
 
     ngOnInit() {
@@ -59,16 +60,24 @@ export class PersonCreateComponent implements OnInit {
                     this.addToast();
                     this.router.navigate(['/search']);
                 },
-                error => this.notificationService.notifyServerError('Adding Person failed! ' + error.json().message));
-
+                error => this.handleError(this.person, error)
+            )
     }
 
     addToast(): void {
-        this.notificationService.notify(
+        this.messageService.add(
             {
                 severity: 'success',
                 summary: this.person.fullName,
                 detail: 'Created!'
             });
+    }
+
+    private handleError(person: Person, error: HttpErrorResponse) : void {
+        this.messageService.add(
+            {severity: 'error',
+                summary: 'Server error!',
+                detail: `Adding Person ${person.uid} failed! Status: ${error.status}`
+            })
     }
 }

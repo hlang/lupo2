@@ -35,7 +35,6 @@ export class AuthService {
                         authStatus.isAdmin = status.admin;
                         authStatus.userDn = status.dn;
                     }
-                    console.log(authStatus);
                     this.authStatus = authStatus;
                     return authStatus;
                 })

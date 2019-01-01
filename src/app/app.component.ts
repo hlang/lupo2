@@ -1,6 +1,4 @@
 import {Component, OnDestroy, OnInit} from "@angular/core";
-import {NotificationService} from "./notification.service";
-import {Subscription} from "rxjs/Subscription";
 import {Message} from "primeng/primeng";
 import {Router} from "@angular/router";
 import {AuthService} from "./auth.service";
@@ -13,15 +11,15 @@ import {AuthService} from "./auth.service";
 export class AppComponent implements OnInit, OnDestroy {
     title = 'Lupo';
     msgs: Message[] = [];
-    subscription: Subscription;
 
     constructor(private router: Router,
-                private authService: AuthService,
-                private notificationService: NotificationService) {
+                private authService: AuthService) {
     }
 
     ngOnInit() {
-        this.subscribeToNotifications();
+    }
+
+    ngOnDestroy(): void {
     }
 
     isAdmin(): boolean {
@@ -37,15 +35,5 @@ export class AppComponent implements OnInit, OnDestroy {
         this.router.navigate(['/login']);
     }
 
-    subscribeToNotifications() {
-        this.subscription = this.notificationService.notificationChange
-            .subscribe(message => {
-                this.msgs = [message];
-            });
-    }
-
-    ngOnDestroy() {
-        this.subscription.unsubscribe();
-    }
 
 }

@@ -49,8 +49,8 @@ export class LdapService {
         return this.http.put<Person>(this.userUrl, person);
     }
 
-    setPasswd(person: Person): void {
-        this.http.put(this.userUrl + "passwd", person).subscribe();
+    setPasswd(person: Person): Observable<Object> {
+        return this.http.put(this.userUrl + "passwd", person);
     }
 
     private extractData(body: any) {

@@ -1,14 +1,13 @@
 import {Component, OnInit} from "@angular/core";
 import {ActivatedRoute, Params, Router} from "@angular/router";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 
 import {LdapService} from "../ldap.service";
 import {Person} from "../person";
 import "rxjs/add/operator/switchMap";
-import {NotificationService} from "../notification.service";
 import {AuthService} from "../auth.service";
-import {ConfirmationService} from "primeng/api";
+import {ConfirmationService, MessageService} from "primeng/api";
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
     selector: 'app-person-detail',
@@ -26,10 +25,9 @@ export class PersonDetailComponent implements OnInit {
     constructor(private router: Router,
                 private route: ActivatedRoute,
                 private ldapService: LdapService,
-                private notificationService: NotificationService,
                 private authService: AuthService,
                 private confirmationService: ConfirmationService,
-                private modalService: NgbModal) {
+                private messageService: MessageService) {
     }
 
     ngOnInit() {
@@ -40,7 +38,7 @@ export class PersonDetailComponent implements OnInit {
     private loadPerson(dn: string) {
         this.ldapService.getPersonByDn(dn)
             .subscribe((person: Person) => this.person = person,
-                response => this.notificationService.notifyServerError('Loading DN ' + dn + ' failed! Status: ' + response.status)
+                error => this.handleError(dn, error)
             );
     }
 
@@ -63,14 +61,14 @@ export class PersonDetailComponent implements OnInit {
     deleteLdap(person: Person) {
         this.ldapService.deletePerson(person.dn)
             .subscribe(
-                res => this.router.navigate(['/search'])
+                res => {
+                    this.messageService.add(
+                        {severity: 'info', summary: person.fullName, detail: 'Deleted!'}
+                        );
+                    this.router.navigate(['/search'])
+                }
             );
-        this.notificationService.notify(
-            {
-                severity: 'info',
-                summary: person.fullName,
-                detail: 'Deleted!'
-            });
+
     }
 
     updatePerson(person: Person) {
@@ -79,24 +77,23 @@ export class PersonDetailComponent implements OnInit {
                 () => {
                     this.personEdit = false;
                     this.loadPerson(person.dn);
-                    this.notificationService.notify(
-                        {
-                            severity: 'success',
-                            summary: person.fullName,
-                            detail: 'Updated!'
-                        })
-                }
+                    this.messageService.add(
+                        {severity: 'success', summary: person.fullName, detail: 'Updated!'})
+                },
+                error => this.handleError(person.dn, error)
             );
     }
 
     savePassword() {
-        this.ldapService.setPasswd(this.person);
-        this.notificationService.notify(
-            {
-                severity: 'success',
-                summary: this.person.fullName,
-                detail: 'Password updated!'
-            });
+        this.ldapService.setPasswd(this.person)
+            .subscribe(() => {
+                this.messageService.add(
+                    {severity: 'success', summary: this.person.fullName, detail: 'Password updated!'});
+                },
+                    error => this.handleError(this.person.dn, error)
+
+
+            );
         this.passwordEdit = false;
     }
 
@@ -115,5 +112,13 @@ export class PersonDetailComponent implements OnInit {
     private resetPassword(): void {
         this.confirmPasswordStr = "";
         this.person.password = "";
+    }
+
+    private handleError(dn: String, error: HttpErrorResponse) : void {
+        this.messageService.add(
+            {severity: 'error',
+                summary: 'Server error!',
+                detail: `Accessing DN ${dn} failed! Status: ${error.status}`
+            })
     }
 }

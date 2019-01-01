@@ -8,12 +8,14 @@ import {
     ConfirmDialogModule,
     GrowlModule,
     InputTextModule,
+    MessageService,
     PaginatorModule,
     PanelModule,
     SharedModule,
     TooltipModule
 } from "primeng/primeng";
 import {TableModule} from "primeng/table";
+import {ToastModule} from "primeng/toast";
 
 import {AppComponent} from "./app.component";
 import {SearchBoardComponent} from "./search-board/search-board.component";
@@ -21,7 +23,6 @@ import {PersonDetailComponent} from "./person-detail/person-detail.component";
 import {PersonCreateComponent} from "./person-create/person-create.component";
 import {LdapService} from "./ldap.service";
 import {EqualValidator} from "./equal-validator.directive";
-import {NotificationService} from "./notification.service";
 import {PageNotFoundComponent} from "./page-not-found/page-not-found.component";
 import {AppRoutingModule} from "./app-routing/app-routing.module";
 import {AuthGuardService} from "./auth-guard.service";
@@ -30,7 +31,6 @@ import {LoginComponent} from "./login/login.component";
 import {AdminUserGuardService} from "./admin-user-guard.service";
 import {InfoService} from "./info.service";
 import {AppFooterComponent} from "./app-footer/app-footer.component";
-import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 
 
 @NgModule({
@@ -56,13 +56,13 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
         TableModule,
         PaginatorModule,
         ConfirmDialogModule,
+        ToastModule,
         InputTextModule,
-        SharedModule,
-        NgbModule.forRoot()
+        SharedModule
     ],
     providers: [
         LdapService,
-        NotificationService,
+        MessageService,
         ConfirmationService,
         AuthService,
         InfoService,
