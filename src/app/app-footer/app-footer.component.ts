@@ -16,7 +16,7 @@ export class AppFooterComponent implements OnInit {
     ngOnInit() {
         this.infoService.getInfoVersion()
             .subscribe(
-                str => this.version = str
+                version => this.version = version
             );
     }
 

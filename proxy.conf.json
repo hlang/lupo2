@@ -1,17 +1,17 @@
 {
-    "/api": {
+    "/lupo/api": {
         "target": "http://localhost:8080",
         "secure": false
     },
-    "/actuator/*": {
+    "/lupo/actuator/*": {
         "target": "http://localhost:8080",
         "secure": false
     },
-    "/login": {
+    "/lupo/login": {
         "target": "http://localhost:8080",
         "secure": false
     },
-    "/logout": {
+    "/lupo/logout": {
         "target": "http://localhost:8080",
         "secure": false
     }
