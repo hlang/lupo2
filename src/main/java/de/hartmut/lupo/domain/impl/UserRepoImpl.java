@@ -95,7 +95,8 @@ public class UserRepoImpl implements UserRepo {
 
     @Override
     public void create(User user) {
-        LOGGER.debug("create(): user: {}", user.getFullName());
+        user.sanitize();
+        LOGGER.debug("create(): user: {}", user);
         DirContextAdapter context = new DirContextAdapter(buildDn(user));
         mapToContext(user, context);
         ldapTemplate.bind(context);

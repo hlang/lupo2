@@ -16,6 +16,8 @@
 
 package de.hartmut.lupo.domain;
 
+import org.springframework.util.StringUtils;
+
 /**
  * hartmut on 05.02.17.
  */
@@ -88,6 +90,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void sanitize() {
+        uid = uid.trim();
+        if(!StringUtils.isEmpty(email)) {
+            email = email.trim();
+        }
     }
 
     @Override
