@@ -5,10 +5,10 @@
         <div class="form-group">
           <div class="input-group">
             <input type="search" class="form-control" id="uid" placeholder="search text"
-                   [(ngModel)]="searchStr" name="uid">
+                   [(ngModel)]="searchStr" (ngModelChange)="searchStrChange()" name="uid">
           </div>
         </div>
-        <button class="btn btn-info" (click)="getPersons(searchStr)">
+        <button class="btn btn-info" (click)="getPersons()">
           <span class="fa fa-search" aria-label="search"></span>
         </button>
       </form>

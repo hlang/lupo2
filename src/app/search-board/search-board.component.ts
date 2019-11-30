@@ -4,6 +4,8 @@ import {Person} from "../person";
 import {LdapService} from "../ldap.service";
 import {MessageService} from "primeng/api";
 import {HttpErrorResponse} from "@angular/common/http";
+import {Subject} from "rxjs";
+import {debounceTime, distinctUntilChanged} from "rxjs/operators";
 
 @Component({
     selector: 'app-search-board',
@@ -16,6 +18,7 @@ export class SearchBoardComponent implements OnInit {
     pageNumber = 0;
     pageSize = 10;
     collectionSize = 0;
+    private searchStrSource = new Subject<string>();
 
     constructor(private router: Router,
                 private ldapService: LdapService,
@@ -24,10 +27,22 @@ export class SearchBoardComponent implements OnInit {
 
     ngOnInit() {
         this.getPersons();
+        this.searchStrSource.asObservable()
+            .pipe(
+                debounceTime(500),
+                distinctUntilChanged(),
+            )
+            .subscribe(
+                searchStr => this.getPersons()
+            )
     }
 
-    getPersons(searchStr?: string) {
-        this.getPersonsPage(0, searchStr);
+    searchStrChange() {
+        this.searchStrSource.next(this.searchStr);
+    }
+
+    getPersons() {
+        this.getPersonsPage(0, this.searchStr);
     }
 
     getPersonsPage(pageNumber: number, searchStr?: string): void {
@@ -57,4 +72,5 @@ export class SearchBoardComponent implements OnInit {
                 detail: `Loading LDAP entries failed! Status: ${error.status}`
             })
     }
+
 }
