@@ -93,6 +93,16 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
+    @GetMapping("/uid/{uid}")
+    public ResponseEntity<User> getUserByUid(@PathVariable String uid) {
+        LOGGER.debug("getUserByUid(): uid={}", uid);
+        List<User> users = userRepo.findByUid(uid);
+        if(users.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(users.get(0));
+    }
+
     @DeleteMapping("/{dn:.+}")
     public ResponseEntity<Void> deleteUser(@PathVariable String dn) {
         LOGGER.debug("deleteUser(): {}", dn);

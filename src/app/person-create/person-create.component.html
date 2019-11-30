@@ -13,15 +13,20 @@
         <input type="text" class="form-control"
                placeholder="uid"
                required minlength="3"
-               [(ngModel)]="person.uid" name="uid"/>
+               [(ngModel)]="person.uid"
+               (ngModelChange)="inputChanged()"
+               name="uid"/>
       </div>
+      <div class="col-3 uid-exists" *ngIf="uidAlreadyFound">Uid already exists</div>
     </div>
     <div class="row pb-2">
       <div class="col-1"></div>
       <div class="col-2 label">Firstname</div>
       <div class="col-5">
         <input type="text" class="form-control"
-               [(ngModel)]="person.addFirstName" name="firstName"/>
+               [(ngModel)]="person.addFirstName"
+               (ngModelChange)="inputChanged()"
+               name="firstName"/>
       </div>
     </div>
     <div class="row pb-2">
@@ -29,7 +34,9 @@
       <div class="col-2 label">Lastname</div>
       <div class="col-5">
         <input type="text" class="form-control" required
-               [(ngModel)]="person.addLastName" name="lastName"/>
+               [(ngModel)]="person.addLastName"
+               (ngModelChange)="inputChanged()"
+               name="lastName"/>
       </div>
     </div>
     <div class="row pb-2">
@@ -66,7 +73,8 @@
     <div class="row pt-2">
       <div class="col-3"></div>
       <div class="col-9">
-        <button type="submit" class="btn btn-success" [disabled]="!personForm.form.valid">
+        <button type="submit" class="btn btn-success"
+                [disabled]="uidAlreadyFound ||!personForm.form.valid">
           <span class="fa fa-user-plus" aria-label="create user"></span>
         </button>
       </div>

@@ -76,7 +76,7 @@ public class UserRepoImpl implements UserRepo {
     public List<User> findByUid(String uid) {
         LdapQuery query = query()
                 .where(LDAP_OBJECT_CLASS).is(LDAP_OBJ_CLASS_PERSON)
-                .and(LDAP_ATTR_UID).whitespaceWildcardsLike(uid);
+                .and(LDAP_ATTR_UID).is(uid);
 
         return ldapTemplate.search(query, USER_CONTEXT_MAPPER);
     }
