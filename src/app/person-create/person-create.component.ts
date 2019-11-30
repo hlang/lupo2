@@ -4,6 +4,8 @@ import {LdapService} from "../ldap.service";
 import {Router} from "@angular/router";
 import {MessageService} from "primeng/api";
 import {HttpErrorResponse} from "@angular/common/http";
+import {Subject} from "rxjs";
+import {debounceTime} from "rxjs/operators";
 
 class AddPerson extends Person {
     confirmPassword: string;
@@ -44,6 +46,8 @@ class AddPerson extends Person {
 })
 export class PersonCreateComponent implements OnInit {
     person = new AddPerson();
+    private inputSource = new Subject<void >();
+    uidAlreadyFound: boolean = false;
 
     constructor(private router: Router,
                 private ldapService: LdapService,
@@ -51,6 +55,19 @@ export class PersonCreateComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.inputSource.asObservable()
+            .pipe(
+                debounceTime(500)
+            )
+            .subscribe(
+                event => {
+                    this.ldapService.getByUid(this.person.uid)
+                    .subscribe(
+                        person => this.uidAlreadyFound = true,
+                        error => this.uidAlreadyFound = false
+                    )
+                }
+            )
     }
 
 
@@ -73,6 +90,10 @@ export class PersonCreateComponent implements OnInit {
             });
     }
 
+    inputChanged() {
+        this.inputSource.next(null);
+    }
+
     private handleError(person: Person, error: HttpErrorResponse) : void {
         this.messageService.add(
             {severity: 'error',
@@ -84,4 +105,5 @@ export class PersonCreateComponent implements OnInit {
     private resetValues() {
         this.person = new AddPerson();
     }
+
 }

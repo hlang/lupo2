@@ -53,6 +53,10 @@ export class LdapService {
         return this.http.put(this.userUrl + "passwd", person);
     }
 
+    getByUid(uid: string) : Observable<Person> {
+        return this.http.get<Person>(this.userUrl + `uid/${uid}`);
+    }
+
     private extractData(body: any) {
         const searchResult = new SearchResult();
         if (body._embedded) {

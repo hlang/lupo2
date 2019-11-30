@@ -10,3 +10,8 @@
     text-align: right;
     font-weight: bold;
 }
+
+.uid-exists {
+    font-weight: bold;
+    color: red;
+}
