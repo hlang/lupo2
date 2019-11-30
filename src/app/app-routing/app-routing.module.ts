@@ -14,7 +14,10 @@ const appRoutes: Routes = [
         component: SearchBoardComponent,
         canActivate: [AuthGuardService]
     },
-    {path: 'add', component: PersonCreateComponent},
+    {
+        path: 'add',
+        component: PersonCreateComponent
+    },
     {
         path: 'detail/:dn',
         component: PersonDetailComponent,

@@ -58,7 +58,7 @@ export class PersonCreateComponent implements OnInit {
         this.ldapService.addPerson(this.person)
             .subscribe(response => {
                     this.addToast();
-                    this.router.navigate(['/search']);
+                    this.resetValues();
                 },
                 error => this.handleError(this.person, error)
             )
@@ -79,5 +79,9 @@ export class PersonCreateComponent implements OnInit {
                 summary: 'Server error!',
                 detail: `Adding Person ${person.uid} failed! Status: ${error.status}`
             })
+    }
+
+    private resetValues() {
+        this.person = new AddPerson();
     }
 }
