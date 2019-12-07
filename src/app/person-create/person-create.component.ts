@@ -94,16 +94,16 @@ export class PersonCreateComponent implements OnInit {
         this.inputSource.next(null);
     }
 
+    resetValues() {
+        this.person = new AddPerson();
+    }
+
     private handleError(person: Person, error: HttpErrorResponse) : void {
         this.messageService.add(
             {severity: 'error',
                 summary: 'Server error!',
                 detail: `Adding Person ${person.uid} failed! Status: ${error.status}`
             })
-    }
-
-    private resetValues() {
-        this.person = new AddPerson();
     }
 
 }
