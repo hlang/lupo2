@@ -1,3 +1,7 @@
 .app-nav {
     cursor: pointer;
 }
+
+.app-logout {
+    margin-left: 10px;
+}
