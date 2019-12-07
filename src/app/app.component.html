@@ -27,7 +27,7 @@
     <div class="navbar-nav" *ngIf="isLoggedIn()">
       <a class="app-nav nav-item nav-link mb-0 a active " (click)="logout()"
          pTooltip="Logout" tooltipPosition="left">
-        <span class="fa fa-sign-out"></span>
+        {{authService.authStatus.name}}<span class="fa fa-sign-out app-logout"></span>
       </a>
     </div>
   </div>

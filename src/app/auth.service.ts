@@ -11,6 +11,7 @@ import {of} from "rxjs";
 export class AuthStatus {
     isLoggedIn: boolean = false;
     isAdmin: boolean = false;
+    name: string;
     userDn: string;
 }
 
@@ -34,6 +35,7 @@ export class AuthService {
                         authStatus.isLoggedIn = true;
                         authStatus.isAdmin = status.admin;
                         authStatus.userDn = status.dn;
+                        authStatus.name = status.name;
                     }
                     this.authStatus = authStatus;
                     return authStatus;

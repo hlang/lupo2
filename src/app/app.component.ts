@@ -30,10 +30,13 @@ export class AppComponent implements OnInit, OnDestroy {
         return this.authService.authStatus.isLoggedIn
     }
 
+    currentUser() : string {
+        return this.authService.authStatus.name;
+    }
+
     logout() {
         this.authService.logout();
         this.router.navigate(['/login']);
     }
-
 
 }
