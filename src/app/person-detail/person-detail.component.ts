@@ -121,4 +121,5 @@ export class PersonDetailComponent implements OnInit {
                 detail: `Accessing DN ${dn} failed! Status: ${error.status}`
             })
     }
+
 }
