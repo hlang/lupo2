@@ -96,7 +96,10 @@
       <div class="col-3"></div>
       <div class="col-9">
         <button type="submit" class="btn btn-success" [disabled]="!personForm.form.valid">
-          <span class="fa fa-save" aria-label="save user"></span>
+          <i class="fa fa-save" aria-label="save user"></i> Save
+        </button>
+        <button type="button" class="btn btn-secondary cancel-button" (click)="togglePersonEdit()">
+          <i class="fa fa-times" aria-hidden="true"></i> Cancel
         </button>
       </div>
     </div>
@@ -138,7 +141,10 @@
       <div class="col-3"></div>
       <div class="col-9">
         <button type="submit" class="btn btn-success" [disabled]="!passwordForm.form.valid">
-          <span class="fa fa-save" aria-label="save password"></span>
+          <i class="fa fa-save" aria-hidden="true"></i> Save
+        </button>
+        <button type="button" class="btn btn-secondary cancel-button" (click)="togglePasswordEdit()">
+          <i class="fa fa-times" aria-hidden="true"></i> Cancel
         </button>
       </div>
     </div>
