@@ -75,8 +75,12 @@
       <div class="col-9">
         <button type="submit" class="btn btn-success"
                 [disabled]="uidAlreadyFound ||!personForm.form.valid">
-          <span class="fa fa-user-plus" aria-label="create user"></span>
+          <i class="fa fa-user-plus" aria-hidden="true"></i> Add
         </button>
+        <button type="button" class="btn btn-secondary clear-button" (click)="resetValues()">
+          <i class="fa fa-repeat" aria-hidden="true"></i> Clear
+        </button>
+
       </div>
     </div>
   </form>
