@@ -1,6 +1,6 @@
 <div>
-  <form autocomplete="off"
-        (ngSubmit)="newPerson()" #personForm="ngForm">
+  <form autocomplete="off" [formGroup]="personForm"
+        (ngSubmit)="newPerson()" >
     <div class="row pb-2">
       <div class="col-1"></div>
       <div class="col-2 label">Fullname</div>
@@ -10,11 +10,7 @@
       <div class="col-1"></div>
       <div class="col-2 label">Uid</div>
       <div class="col-5">
-        <input type="text" class="form-control"
-               placeholder="uid"
-               required minlength="3"
-               [(ngModel)]="person.uid"
-               (ngModelChange)="inputChanged()"
+        <input type="text" class="form-control" formControlName="uid"
                name="uid"/>
       </div>
       <div class="col-3 uid-exists" *ngIf="uidAlreadyFound">Uid already exists</div>
@@ -23,9 +19,7 @@
       <div class="col-1"></div>
       <div class="col-2 label">Firstname</div>
       <div class="col-5">
-        <input type="text" class="form-control"
-               [(ngModel)]="person.addFirstName"
-               (ngModelChange)="inputChanged()"
+        <input type="text" class="form-control" formControlName="firstName"
                name="firstName"/>
       </div>
     </div>
@@ -33,9 +27,7 @@
       <div class="col-1"></div>
       <div class="col-2 label">Lastname</div>
       <div class="col-5">
-        <input type="text" class="form-control" required
-               [(ngModel)]="person.addLastName"
-               (ngModelChange)="inputChanged()"
+        <input type="text" class="form-control" required formControlName="lastName"
                name="lastName"/>
       </div>
     </div>
@@ -43,9 +35,8 @@
       <div class="col-1"></div>
       <div class="col-2 label">E-Mail</div>
       <div class="col-5">
-        <input type="email" class="form-control"
-               pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
-               [(ngModel)]="person.email" name="email"/>
+        <input type="email" class="form-control" formControlName="email"
+               name="email"/>
       </div>
     </div>
     <div class="row pb-2">
@@ -53,10 +44,7 @@
       <div class="col-2 label">Password</div>
       <div class="col-5">
         <input type="password" class="form-control"
-               name="password" [(ngModel)]="person.password"
-               required minlength="3"
-               validateEqual="confirmPassword" reverse="true"
-               #password="ngModel">
+               name="password" formControlName="password">
       </div>
     </div>
     <div class="row pb-2">
@@ -64,17 +52,14 @@
       <div class="col-2 label">Confirm Password</div>
       <div class="col-5">
         <input type="password" class="form-control"
-               name="confirmPassword" [(ngModel)]="person.confirmPassword"
-               required
-               validateEqual="password"
-               #confirmPassword="ngModel">
+               name="confirmPassword" formControlName="confirmPassword">
       </div>
     </div>
     <div class="row pt-2">
       <div class="col-3"></div>
       <div class="col-9">
         <button type="submit" class="btn btn-success"
-                [disabled]="uidAlreadyFound ||!personForm.form.valid">
+                [disabled]="uidAlreadyFound ||!personForm.valid">
           <i class="fa fa-user-plus" aria-hidden="true"></i> Add
         </button>
         <button type="button" class="btn btn-secondary clear-button" (click)="resetValues()">

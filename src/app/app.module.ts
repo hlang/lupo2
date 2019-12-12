@@ -2,7 +2,7 @@ import {BrowserModule} from "@angular/platform-browser";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {HttpClientModule} from "@angular/common/http";
 import {NgModule} from "@angular/core";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {
     ConfirmationService,
     ConfirmDialogModule,
@@ -49,6 +49,7 @@ import {AppFooterComponent} from "./app-footer/app-footer.component";
         BrowserModule,
         BrowserAnimationsModule,
         FormsModule,
+        ReactiveFormsModule,
         HttpClientModule,
         GrowlModule,
         PanelModule,
