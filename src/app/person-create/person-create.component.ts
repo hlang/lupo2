@@ -38,9 +38,9 @@ export class PersonCreateComponent implements OnInit {
     uidAlreadyFound: boolean = false;
 
     personForm = new FormGroup({
-        firstName: new FormControl('', Validators.required),
+        firstName: new FormControl(null),
         lastName: new FormControl('', Validators.required),
-        email: new FormControl('', Validators.email),
+        email: new FormControl(null, Validators.email),
         uid: new FormControl('',
             [Validators.required,Validators.minLength(3)],
             this.uidDoesNotExistValidator()),
