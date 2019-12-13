@@ -4,7 +4,7 @@
     <div class="row pb-2">
       <div class="col-1"></div>
       <div class="col-2 label">Fullname</div>
-      <div class="col-5">{{person.fullName}}</div>
+      <div class="col-5">{{fullName}}</div>
     </div>
     <div class="row pb-2">
       <div class="col-1"></div>
@@ -13,7 +13,7 @@
         <input type="text" class="form-control" formControlName="uid"
                name="uid"/>
       </div>
-      <div class="col-3 uid-exists" *ngIf="uidAlreadyFound">Uid already exists</div>
+      <div class="col-3 uid-exists" *ngIf="uid.invalid && uid.errors.uidExists">Uid already exists</div>
     </div>
     <div class="row pb-2">
       <div class="col-1"></div>
@@ -27,7 +27,7 @@
       <div class="col-1"></div>
       <div class="col-2 label">Lastname</div>
       <div class="col-5">
-        <input type="text" class="form-control" required formControlName="lastName"
+        <input type="text" class="form-control" formControlName="lastName"
                name="lastName"/>
       </div>
     </div>
