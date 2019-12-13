@@ -5,7 +5,7 @@
 
 	<groupId>de.hartmut</groupId>
 	<artifactId>lupo</artifactId>
-    <version>0.0.5-SNAPSHOT</version>
+    <version>0.0.5</version>
 	<packaging>jar</packaging>
 
 	<name>lupo</name>
