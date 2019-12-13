@@ -16,7 +16,8 @@ const appRoutes: Routes = [
     },
     {
         path: 'add',
-        component: PersonCreateComponent
+        component: PersonCreateComponent,
+        canActivate: [AuthGuardService]
     },
     {
         path: 'detail/:dn',
