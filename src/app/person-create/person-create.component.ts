@@ -42,7 +42,7 @@ export class PersonCreateComponent implements OnInit {
         lastName: new FormControl('', Validators.required),
         email: new FormControl(null, Validators.email),
         uid: new FormControl('',
-            [Validators.required,Validators.minLength(3)],
+            [Validators.required,Validators.minLength(3),Validators.pattern('[a-z0-9]*')],
             this.uidDoesNotExistValidator()),
         password: new FormControl('', Validators.required),
         confirmPassword: new FormControl('', Validators.required)

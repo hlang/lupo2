@@ -19,6 +19,7 @@
                name="uid"/>
       </div>
       <div class="col-3 uid-exists" *ngIf="uid.invalid && uid.errors.uidExists">Uid already exists</div>
+      <div class="col-3 uid-exists" *ngIf="uid.invalid && uid.errors.pattern">Only lowercase and numbers allowed</div>
     </div>
     <div class="row pb-2">
       <div class="col-1"></div>
